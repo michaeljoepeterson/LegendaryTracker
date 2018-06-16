@@ -22,7 +22,7 @@ function saveData(){
 	LegendaryData.remove({}, function(){
 
 	});
-	console.log(dataLegendary.length);
+	//console.log(dataLegendary.length);
 	for (let i = 0; i < dataLegendary.length; i++){
 		let data = new LegendaryData(dataLegendary[i]);
 		
@@ -30,7 +30,7 @@ function saveData(){
 			data.save();
 		}
 		else{
-			data.save().then(findData);
+			data.save();
 		}
 		//console.log(i);
 	}
@@ -45,7 +45,6 @@ function runServer(databaseUrl, port=PORT){
       server = app.listen(port, () => {
         console.log(`Your app is listening on port ${port}`);
         saveData();
-        //findData();
         resolve();
       })
         .on('error', err => {
@@ -56,9 +55,25 @@ function runServer(databaseUrl, port=PORT){
   });
 }
 
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log('Closing server');
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  });
+}
+
 console.log("test");
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 
 }
+
+module.exports = {app, runServer, saveData, closeServer};
