@@ -6,7 +6,7 @@ const {PORT, DATABASE_URL } = require('./config');
 mongoose.Promise = global.Promise;
 const {LegendaryData} = require('./models/LegendaryData');
 const app = express();
-const {router: usersRouter} = require('./users');
+const {router: userRouter} = require('./users/router');
 app.use(express.json());
 
 app.use("/api/users", userRouter);
