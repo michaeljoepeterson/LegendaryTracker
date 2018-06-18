@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "localDb": "node ./localDB/setUp.js",
     "test": "mocha --exit"
   },
   "author": "Michael Peterson",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "express": "^4.16.3",

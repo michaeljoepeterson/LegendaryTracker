@@ -11,12 +11,6 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(express.json());
 let server;
-//verify data is there
-function findData(){
-	LegendaryData.find({name: 'Deadpool'}).then(function(result){
-		console.log(result);
-	});
-}
 
 function saveData(){
 	LegendaryData.remove({}, function(){
