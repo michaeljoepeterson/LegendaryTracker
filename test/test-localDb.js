@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const expect = chai.expect;
 const {LegendaryData} = require('../models/LegendaryData');
 const {TEST_DATABASE_URL} = require('../config');
+const {User} = require('../models/userData');
 const {app, runServer, saveData,closeServer} = require("../localDB/setUp");
 const {dataLegendary} = require('../localDB/Ldata');
 
@@ -37,9 +38,6 @@ describe("Add all test data and check that it was added correctly", function(){
 	before(function() {
 	    return runServer(TEST_DATABASE_URL);
 	 });
- 	afterEach(function() {
-    	return tearDownDb();
-  	});
 
   	after(function() {
    		return closeServer();
@@ -49,10 +47,10 @@ describe("Add all test data and check that it was added correctly", function(){
 		//runServer(TEST_DATABASE_URL);
 		this.timeout(15000);
    		setTimeout(done, 15000);
-		console.log("test111");
+		
 		LegendaryData.find().then(function(results){
 			let testIndexes = randomChoices();
-			console.log("test");
+			
 			let found1 = findObject(results, testIndexes[0]);
 			let found2 = findObject(results, testIndexes[1]);
 			let found3 = findObject(results, testIndexes[2]);
@@ -72,6 +70,15 @@ describe("Add all test data and check that it was added correctly", function(){
 			expect(found1).to.equal(true);
 			expect(found2).to.equal(true);
 			expect(found3).to.equal(true);
+			done();
+		});
+	});
+
+	it('should create a new user with user name test',function(done){
+
+		User.find().then(function(result){
+			
+			expect(result[0].username).to.equal("test");
 			done();
 		});
 	});

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const {PORT, DATABASE_URL } = require('../config');
 const {LegendaryData} = require('../models/LegendaryData');
+const {User} = require('../models/userData');
 const {dataLegendary} = require('./Ldata');
 
 mongoose.Promise = global.Promise;
@@ -16,7 +17,17 @@ function saveData(){
 	LegendaryData.remove({}, function(){
 
 	});
-	//console.log(dataLegendary.length);
+  
+  User.remove({},function(){
+
+  });
+  User.hashPassword("test1").then(hash =>{
+    User.create({
+      username: "test",
+      password: hash
+    });
+  });
+
 	for (let i = 0; i < dataLegendary.length; i++){
 		let data = new LegendaryData(dataLegendary[i]);
 		
@@ -28,6 +39,7 @@ function saveData(){
 		}
 		//console.log(i);
 	}
+  console.log("done");
 }
 
 function runServer(databaseUrl, port=PORT){
