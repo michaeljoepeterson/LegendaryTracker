@@ -40,6 +40,7 @@ describe("Add all test data and check that it was added correctly", function(){
 	 });
 
   	after(function() {
+  		tearDownDb();
    		return closeServer();
   	});
 
@@ -54,19 +55,7 @@ describe("Add all test data and check that it was added correctly", function(){
 			let found1 = findObject(results, testIndexes[0]);
 			let found2 = findObject(results, testIndexes[1]);
 			let found3 = findObject(results, testIndexes[2]);
-			
-			/*
-			for (let i = 0; i < dataLegendary.length;i++){
-				if(dataLegendary[i].name === 'Deadpool'){
-					foundObject = dataLegendary[i];
-				}
-			}
 
-			console.log(foundObject);
-			expect(foundObject.name).to.equal(result[0].name);
-			expect(result[0].classification).to.equal(foundObject.classification);
-			expect(result[0].expansion).to.equal(foundObject.expansion);
-			*/
 			expect(found1).to.equal(true);
 			expect(found2).to.equal(true);
 			expect(found3).to.equal(true);
