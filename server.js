@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {PORT, DATABASE_URL } = require('./config');
 mongoose.Promise = global.Promise;
-const {LegendaryData} = require('./models/LegendaryData');
+const {LegendaryData} = require('./models/legendaryData');
 const app = express();
 const {router: userRouter} = require('./users/router');
 app.use(express.json());
