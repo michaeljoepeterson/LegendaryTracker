@@ -2,7 +2,7 @@ const chai = require('chai');
 const mongoose = require('mongoose');
 
 const expect = chai.expect;
-const {LegendaryData} = require('../models/LegendaryData');
+const {LegendaryData} = require('../models/legendaryData');
 const {TEST_DATABASE_URL} = require('../config');
 const {User} = require('../models/userData');
 const {app, runServer, saveData,closeServer} = require("../localDB/setUp");

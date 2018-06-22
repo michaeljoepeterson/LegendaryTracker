@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const {PORT, DATABASE_URL } = require('../config');
-const {LegendaryData} = require('../models/LegendaryData');
+const {LegendaryData} = require('../models/legendaryData');
 const {User} = require('../models/userData');
 const {dataLegendary} = require('./Ldata');
 
