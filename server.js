@@ -8,7 +8,7 @@ const {LegendaryData} = require('./models/legendaryData');
 const app = express();
 const {router: userRouter} = require('./users/router');
 app.use(express.json());
-//app.use(express.static('public'));
+app.use(express.static('public'));
 app.use("/api/users", userRouter);
 
 app.get('/', (req, res) => {
