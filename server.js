@@ -8,7 +8,7 @@ const {LegendaryData} = require('./models/LegendaryData');
 const app = express();
 const {router: userRouter} = require('./users/router');
 app.use(express.json());
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use("/api/users", userRouter);
 
 app.get('/', (req, res) => {
@@ -40,7 +40,7 @@ function runServer(databaseUrl, port = PORT) {
       if (err) {
         return reject(err);
       }
-      server = app.listen(process.env.PORT || 8080, () => {
+      server = app.listen(port, () => {
         console.log(`Your app is listening on port ${port}`);
         resolve();
       })
