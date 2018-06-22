@@ -7,3 +7,5 @@ deploy: sheltered-shore-84644
   app: serverCapstone
   on:
     repo: michaeljoepeterson/serverCapstone
+services:
+- mongodb
