@@ -1,5 +1,7 @@
 function loginUser(user){
 	console.log("user logged in");
+	//include in ajax send once token received
+	//headers: { "Authorization": 'Bearer ' + token }
 }
 
 function userAdded(data){
@@ -9,6 +11,7 @@ function userAdded(data){
 	$(".jsVerifyPassword").empty();
 	$("#usernameInput").val("");
 	$("#passwordInput").val("");
+	$(".jsHeader").text("Login");
 
 }
 function userError(err){
@@ -104,6 +107,7 @@ function createSignUp(){
 		//event.stopImmediatePropagation();
 		event.preventDefault();
 		$(".jsVerifyPassword").empty();
+		$(".jsHeader").text("Sign up");
 		const signupString = generateSignUpString();
 		$(".jsVerifyPassword").append(signupString);
 	});	

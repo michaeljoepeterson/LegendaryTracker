@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const {PORT, DATABASE_URL } = require('./config');
 mongoose.Promise = global.Promise;
 const {LegendaryData} = require('./models/legendaryData');
@@ -10,6 +11,8 @@ const {router: userRouter} = require('./users/router');
 app.use(express.json());
 app.use(express.static('public'));
 app.use("/api/users", userRouter);
+
+//add passport.use for local/jwt strat
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
