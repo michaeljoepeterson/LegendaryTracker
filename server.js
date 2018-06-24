@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -8,14 +8,25 @@ mongoose.Promise = global.Promise;
 const {LegendaryData} = require('./models/legendaryData');
 const app = express();
 const {router: userRouter} = require('./users/router');
+const {localStrategy, jwtStrategy} = require('./auth/strategies');
+const {router: authRouter} = require('./auth/router');
 app.use(express.json());
 app.use(express.static('public'));
-app.use("/api/users", userRouter);
 
-//add passport.use for local/jwt strat
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use("/api/users", userRouter);
+app.use('/api/auth/', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/api/menu', jwtAuth, (req, res) => {
+  res.sendFile(__dirname + '/public/menu.html');
 });
 
 app.get('/legendarydata', (req, res) => {

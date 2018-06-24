@@ -1,7 +1,57 @@
+function getMenuSuccess(data){
+	console.log("Menu Access");
+	console.log(data);
+	window.location.href = "menu.html";
+}
+
+function getMenuError(err){
+	console.log("Menu failed");
+	console.log(err);
+}
+
+function getMenu(key){
+	console.log("Attempt to get menu");
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + key
+		},
+		url: "/api/menu",
+		success: getMenuSuccess,
+		error: getMenuError
+	};
+	$.ajax(settings);
+}
+
+function userLogin(data){
+	console.log("Give key");
+	const authKey = data.authToken;
+	console.log(authKey);
+	getMenu(authKey);
+}
+
+function loginError(err){
+	console.log(err);
+	console.log("error");
+	if (err.statusText === "Unauthorized"){
+		alert("Username or password incorrect");
+	}
+}
+
 function loginUser(user){
 	console.log("user logged in");
 	//include in ajax send once token received
 	//headers: { "Authorization": 'Bearer ' + token }
+	const settings = {
+		method: "POST",
+		url: "/api/auth/login",
+		data: JSON.stringify(user),
+		success: userLogin,
+		error: loginError,
+		dataType: 'json',
+		contentType: 'application/json'
+	};
+	$.ajax(settings);
 }
 
 function userAdded(data){
@@ -70,24 +120,27 @@ function addUser(user){
 
 function submitClicked(){
 	$(".jsSignupForm").submit(function(event){
+		event.stopImmediatePropagation();
 		event.preventDefault();
+
 		const userName = $("#usernameInput").val();
 		const pwd = $("#passwordInput").val();
 		const pwdVerify = $("#verifyInput").val();
 		if (pwdVerify === undefined){
 			//then do some login stuff
-			loginUser();
-		}
-		
+			const userData = {
+				username: userName,
+				password: pwd
+			};
+			loginUser(userData);
+		}	
 		else if (pwdVerify !== undefined && pwd === pwdVerify){
-			
 			const userData = {
 				username: userName,
 				password: pwd
 			};
 			addUser(userData);
 		}
-
 		else if(pwdVerify !== undefined && pwd !== pwdVerify){
 
 			alert("Passwords do not match");
