@@ -1,6 +1,5 @@
 function getMenuSuccess(data){
 	console.log("Menu Access");
-	console.log(data);
 	window.location.href = "menu.html";
 }
 
@@ -26,7 +25,6 @@ function getMenu(key){
 function userLogin(data){
 	console.log("Give key");
 	const authKey = data.authToken;
-	console.log(authKey);
 	getMenu(authKey);
 }
 
