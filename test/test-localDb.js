@@ -1,3 +1,4 @@
+/*
 const chai = require('chai');
 const mongoose = require('mongoose');
 
@@ -72,3 +73,4 @@ describe("Add all test data and check that it was added correctly", function(){
 		});
 	});
 });
+*/
