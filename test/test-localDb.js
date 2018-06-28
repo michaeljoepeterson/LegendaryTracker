@@ -1,4 +1,4 @@
-/*
+
 const chai = require('chai');
 const mongoose = require('mongoose');
 
@@ -35,7 +35,7 @@ function randomChoices(){
 }
 
 describe("Add all test data and check that it was added correctly", function(){
-	this.timeout(15000);
+	this.timeout(6000);
 	before(function() {
 	    return runServer(TEST_DATABASE_URL);
 	 });
@@ -47,8 +47,8 @@ describe("Add all test data and check that it was added correctly", function(){
 
 	it("should create a new database and add data from LData.js correctly",function(done){
 		//runServer(TEST_DATABASE_URL);
-		this.timeout(15000);
-   		setTimeout(done, 15000);
+		this.timeout(6000);
+   		setTimeout(done, 6000);
 		
 		LegendaryData.find().then(function(results){
 			let testIndexes = randomChoices();
@@ -73,4 +73,3 @@ describe("Add all test data and check that it was added correctly", function(){
 		});
 	});
 });
-*/

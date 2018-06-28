@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require('chai');
-const mongoose = require('mongoose');
+
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
@@ -12,12 +12,6 @@ const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-
-function tearDownDb() {
-  console.warn('Deleting database');
-  return mongoose.connection.dropDatabase();
-}
-
 describe("/api/users test", function(){
 	const username = "testUserName";
 	const password = "testPassword";
@@ -27,36 +21,35 @@ describe("/api/users test", function(){
 		return runServer(TEST_DATABASE_URL);
 	});
 	after(function(){
-		tearDownDb();
+		
 		return closeServer();
 	});
 
 	afterEach(function () {
     	return User.remove({});
-  });
+  	});
 
 	describe("POST Tests", function(done){
 		it('Should reject users missing username',function(){
 			return chai.request(app).post('/api/users')
 			.send({
-				"password": password
+				password
 			})
 			.then((resTest) => {
-				//console.log(resTest);
-				console.log(resTest.text);
-				expect.fail(null,null, 'Request should fail');
-				//console.log(resTest.text.code);
-
-				//expect(resTest.text.code).to.equal(422);
+				//console.log(resTest);		
+				//expect.fail(null,null, 'Request should fail')
+				expect(resTest).to.have.status(422);
+				expect(resTest.body.reason).to.equal('ValidationError');
+				expect(resTest.body.message).to.equal('Missing Field');
+				expect(resTest.body.location).to.equal('username');
 			
 			})
 			.catch(err => {
 				console.log(err);
-				/*
 				if(err instanceof chai.AssertionError){
 					throw err;
 				}
-				
+				/*
 				const res = err.response;
 				console.log(res);
 				expect(res).to.have.status(422);
@@ -64,6 +57,28 @@ describe("/api/users test", function(){
 				expect(res.body.message).to.equal('Missing field');
 				expect(res.body.location).to.equal('username');
 				*/
+			});
+		});
+		it("should create a new user",function(){
+			return chai.request(app).post('/api/users')
+			.send({
+				username,
+				password
+			}).
+			then(res => {
+				expect(res).to.have.status(201);
+				expect(res.body).to.be.an('object');
+				expect(res.body).to.have.keys("username");
+				expect(res.body.username).to.equal(username);
+				return User.findOne({username});
+			})
+			.then(user => {
+				//console.log(user);
+				expect(user).to.not.be.null;
+				return user.validatePassword(password);
+			})
+			.then(passwordTest => {
+				expect(passwordTest).to.be.true;
 			});
 		});
 	});
