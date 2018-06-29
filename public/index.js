@@ -1,10 +1,9 @@
 function getMenuSuccess(data){
 	console.log("Menu Access");
 	console.log(data);
-	//window.location.href = "menu.html";
-	/*The second issue I am stuck on right now is that I have my menu page in a folder I called protected, the issue is is that I can just type in the directory localhost:/protected/menu.html and access that page without any authentication. Is there a way I can restrict access to a directory?
-	*/
-	//document.write(data);
+	//window.location.href = "/protected/";
+	//if I do this then everything will bassically be the same page which sort of solves the jwt problem
+	document.write(data);
 }
 
 function getMenuError(err){

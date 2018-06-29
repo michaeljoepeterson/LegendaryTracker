@@ -12,7 +12,12 @@ const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 app.use(express.json());
 app.use(express.static('public'));
-app.use("/protected",express.static('protected'));
+//If I leave this commented then people cannot access the protected endpoint with the url
+//but then issue is everything is then one page
+//is there some sort of different auth strategy to do what I am thinking of?
+//https://www.jokecamp.com/tutorial-passportjs-authentication-in-nodejs/
+//https://stackoverflow.com/questions/12276046/nodejs-express-how-to-secure-a-url
+
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
@@ -20,6 +25,8 @@ app.use("/api/users", userRouter);
 app.use('/api/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
+app.use('/protected', jwtAuth);
+app.use("/protected",express.static('protected'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -27,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.get('/protected', jwtAuth, (req, res) => {
   //req.isAuthenticated() === true
-  res.render('/protected/menu.html');
+  res.sendFile(__dirname + '/protected/menu.html');
 });
 
 app.get('/legendarydata', (req, res) => {
