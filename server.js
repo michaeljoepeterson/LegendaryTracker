@@ -12,7 +12,7 @@ const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 app.use(express.json());
 app.use(express.static('public'));
-
+app.use("/protected",express.static('protected'));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
@@ -25,8 +25,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/api/menu', jwtAuth, (req, res) => {
-  res.sendFile(__dirname + '/public/menu.html');
+app.get('/protected', jwtAuth, (req, res) => {
+  //req.isAuthenticated() === true
+  res.render('/protected/menu.html');
 });
 
 app.get('/legendarydata', (req, res) => {

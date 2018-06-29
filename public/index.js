@@ -1,6 +1,10 @@
 function getMenuSuccess(data){
 	console.log("Menu Access");
-	window.location.href = "menu.html";
+	console.log(data);
+	//window.location.href = "menu.html";
+	/*The second issue I am stuck on right now is that I have my menu page in a folder I called protected, the issue is is that I can just type in the directory localhost:/protected/menu.html and access that page without any authentication. Is there a way I can restrict access to a directory?
+	*/
+	//document.write(data);
 }
 
 function getMenuError(err){
@@ -15,7 +19,7 @@ function getMenu(key){
 		headers:{ 
 			"Authorization": 'Bearer ' + key
 		},
-		url: "/api/menu",
+		url: "/protected",
 		success: getMenuSuccess,
 		error: getMenuError
 	};
@@ -38,8 +42,6 @@ function loginError(err){
 
 function loginUser(user){
 	console.log("user logged in");
-	//include in ajax send once token received
-	//headers: { "Authorization": 'Bearer ' + token }
 	const settings = {
 		method: "POST",
 		url: "/api/auth/login",

@@ -38,10 +38,12 @@ describe("/api/users test", function(){
 			.then((resTest) => {
 				//console.log(resTest);		
 				//expect.fail(null,null, 'Request should fail')
+				
 				expect(resTest).to.have.status(422);
 				expect(resTest.body.reason).to.equal('ValidationError');
 				expect(resTest.body.message).to.equal('Missing Field');
 				expect(resTest.body.location).to.equal('username');
+				
 			
 			})
 			.catch(err => {
