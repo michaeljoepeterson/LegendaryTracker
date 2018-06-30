@@ -1,8 +1,11 @@
 'use strict';
+
+//https://www.youtube.com/watch?v=7nafaH9SddU&amp=&t=16s
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const path = require('path');
 const {PORT, DATABASE_URL } = require('./config');
 mongoose.Promise = global.Promise;
 const {LegendaryData} = require('./models/legendaryData');
@@ -12,11 +15,6 @@ const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 app.use(express.json());
 app.use(express.static('public'));
-//If I leave this commented then people cannot access the protected endpoint with the url
-//but then issue is everything is then one page
-//is there some sort of different auth strategy to do what I am thinking of?
-//https://www.jokecamp.com/tutorial-passportjs-authentication-in-nodejs/
-//https://stackoverflow.com/questions/12276046/nodejs-express-how-to-secure-a-url
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -34,13 +32,13 @@ app.get('/', (req, res) => {
 
 app.get('/protected', jwtAuth, (req, res) => {
   //req.isAuthenticated() === true
+  //res.json
   res.sendFile(__dirname + '/protected/menu.html');
 });
 
-app.get('/legendarydata', (req, res) => {
+app.get('/protected/masterminds', jwtAuth, (req, res) => {
   LegendaryData
-    .find()
-    .limit(5)
+    .find({classification:"mastermind"})
     .then(data => {
       res.json({
         data: data.map(

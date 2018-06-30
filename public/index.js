@@ -1,6 +1,8 @@
+const test="test";
+
 function getMenuSuccess(data){
 	console.log("Menu Access");
-	console.log(data);
+	//console.log(data);
 	//window.location.href = "/protected/";
 	//if I do this then everything will bassically be the same page which sort of solves the jwt problem
 	document.write(data);
@@ -12,7 +14,10 @@ function getMenuError(err){
 }
 
 function getMenu(key){
+	//html href
+	
 	console.log("Attempt to get menu");
+	sessionStorage.setItem("Bearer", key);
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -23,10 +28,12 @@ function getMenu(key){
 		error: getMenuError
 	};
 	$.ajax(settings);
+	
 }
 
 function userLogin(data){
 	console.log("Give key");
+	//window.location.href = "/protected/menu.html";
 	const authKey = data.authToken;
 	getMenu(authKey);
 }
@@ -126,11 +133,12 @@ function submitClicked(){
 		const pwd = $("#passwordInput").val();
 		const pwdVerify = $("#verifyInput").val();
 		if (pwdVerify === undefined){
-			//then do some login stuff
+			
 			const userData = {
 				username: userName,
 				password: pwd
 			};
+			sessionStorage.setItem("user", userData.username);
 			loginUser(userData);
 		}	
 		else if (pwdVerify !== undefined && pwd === pwdVerify){
@@ -154,6 +162,14 @@ function generateSignUpString(){
 	return htmlString;
 }
 
+function loginClicked(){
+	$(".jsLoginLink").click(function(event){
+		event.preventDefault();
+		$(".jsVerifyPassword").empty();
+		$(".jsHeader").text("Login");
+	});
+}
+
 function createSignUp(){
 	$(".jsSignUpLink").click(function(event){
 		//event.stopImmediatePropagation();
@@ -164,6 +180,7 @@ function createSignUp(){
 		$(".jsVerifyPassword").append(signupString);
 	});	
 	submitClicked();
+	loginClicked();
 }
 
 $(createSignUp);
