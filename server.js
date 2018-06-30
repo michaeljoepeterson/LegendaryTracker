@@ -83,7 +83,7 @@ app.get('/protected/henchmen', jwtAuth, (req, res) => {
 
 app.get('/protected/villains', jwtAuth, (req, res) => {
   LegendaryData
-    .find({classification:"villains"})
+    .find({classification:"villian"})
     .then(data => {
       res.json({
         data: data.map(
@@ -98,7 +98,7 @@ app.get('/protected/villains', jwtAuth, (req, res) => {
 
 app.get('/protected/scheme', jwtAuth, (req, res) => {
   LegendaryData
-    .find({classification:"villains"})
+    .find({classification:"scheme"})
     .then(data => {
       res.json({
         data: data.map(

@@ -113,11 +113,6 @@ const dataLegendary = [
 	},
 	{
 		classification: "hero",
-		name: "Elektra",
-		expansion: "Dark City"
-	},
-	{
-		classification: "hero",
 		name: "Bishop",
 		expansion: "Dark City"
 	},
@@ -204,11 +199,6 @@ const dataLegendary = [
 	{
 		classification: "mastermind",
 		name: "Red Skull",
-		expansion: "base"
-	},
-	{
-		classification: "mastermind",
-		name: "Magneto",
 		expansion: "base"
 	},
 	{
