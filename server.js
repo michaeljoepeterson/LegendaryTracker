@@ -51,6 +51,66 @@ app.get('/protected/masterminds', jwtAuth, (req, res) => {
     });
 });
 
+app.get('/protected/heroes', jwtAuth, (req, res) => {
+  LegendaryData
+    .find({classification:"hero"})
+    .then(data => {
+      res.json({
+        data: data.map(
+          (singleData) => singleData.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+app.get('/protected/henchmen', jwtAuth, (req, res) => {
+  LegendaryData
+    .find({classification:"henchmen"})
+    .then(data => {
+      res.json({
+        data: data.map(
+          (singleData) => singleData.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+app.get('/protected/villains', jwtAuth, (req, res) => {
+  LegendaryData
+    .find({classification:"villains"})
+    .then(data => {
+      res.json({
+        data: data.map(
+          (singleData) => singleData.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+app.get('/protected/scheme', jwtAuth, (req, res) => {
+  LegendaryData
+    .find({classification:"villains"})
+    .then(data => {
+      res.json({
+        data: data.map(
+          (singleData) => singleData.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 let server;
 
 function runServer(databaseUrl, port = PORT) {
