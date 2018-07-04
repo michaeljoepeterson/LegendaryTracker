@@ -11,7 +11,7 @@ function createDataString(data){
 }
 
 function populateHeroData(data){
-	console.log(data.data[0]);
+	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsHeroSelect1").append(options);
 	$(".jsHeroSelect2").append(options);
@@ -20,7 +20,7 @@ function populateHeroData(data){
 
 function getHeroes(){
 	//html href
-	console.log("get")
+	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -36,14 +36,14 @@ function getHeroes(){
 }
 
 function populateMastermindData(data){
-	console.log(data.data[0]);
+	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsMastermindSelect").append(options);
 }
 
 function getMasterminds(){
 	//html href
-	console.log("get")
+	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -58,6 +58,40 @@ function getMasterminds(){
 	$.ajax(settings);	
 }
 
-$(getMasterminds);
-$(getHeroes);
+function getAuthSuccess(data){
+	console.log(data);
+	$(".jsUserName").text(sessionStorage.getItem("user") + " Logged In");
+	console.log(sessionStorage.getItem("user"));
+}
+
+function getAuthError(err){
+	console.log(err);
+	//alert("Please login");
+	window.location.href = "/index.html";
+}
+
+function getAuth(){
+	//html href	
+	console.log("Attempt to get menu");
+	
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.Bearer
+		},
+		url: "/protected",
+		success: getAuthSuccess,
+		error: getAuthError
+	};
+	$.ajax(settings);
+	
+}
+
+function initializeMenu(){
+	getMasterminds();
+	getHeroes();
+	getAuth();
+}
+
+$(initializeMenu);
 //getMenu();

@@ -18,8 +18,11 @@ const localAuth = passport.authenticate('local',{session: false});
 router.use(bodyParser.json());
 
 router.post('/login', localAuth, (req, res) => {
+	//console.log(req.user);
   const authToken = createAuthToken(req.user.serialize());
   res.json({authToken});
+  //res.render("../views/menu.ejs");
+  //res.redirect('index.html');
 });
 
 const jwtAuth = passport.authenticate('jwt', {session:false});

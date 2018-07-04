@@ -1,46 +1,16 @@
-const test="test";
-
-function getMenuSuccess(data){
-	console.log("Menu Access");
-	//console.log(data);
-	//window.location.href = "/protected/";
-	//if I do this then everything will bassically be the same page which sort of solves the jwt problem
-	document.write(data);
-}
-
-function getMenuError(err){
-	console.log("Menu failed");
-	console.log(err);
-}
-
-function getMenu(key){
-	//html href
-	
-	console.log("Attempt to get menu");
-	sessionStorage.setItem("Bearer", key);
-	const settings = {
-		method: "GET",
-		headers:{ 
-			"Authorization": 'Bearer ' + key
-		},
-		url: "/protected",
-		success: getMenuSuccess,
-		error: getMenuError
-	};
-	$.ajax(settings);
-	
-}
 
 function userLogin(data){
 	console.log("Give key");
 	//window.location.href = "/protected/menu.html";
 	const authKey = data.authToken;
-	getMenu(authKey);
+	sessionStorage.setItem("Bearer", authKey);
+	//getMenu(authKey);
+	window.location.href = "/menu.html";
 }
 
 function loginError(err){
 	console.log(err);
-	console.log("error");
+	console.log("login error");
 	if (err.statusText === "Unauthorized"){
 		alert("Username or password incorrect");
 	}
@@ -126,7 +96,7 @@ function addUser(user){
 
 function submitClicked(){
 	$(".jsSignupForm").submit(function(event){
-		event.stopImmediatePropagation();
+		//event.stopImmediatePropagation();
 		event.preventDefault();
 
 		const userName = $("#usernameInput").val();

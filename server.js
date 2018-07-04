@@ -1,6 +1,5 @@
 'use strict';
 
-//https://www.youtube.com/watch?v=7nafaH9SddU&amp=&t=16s
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -15,7 +14,7 @@ const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 app.use(express.json());
 app.use(express.static('public'));
-
+app.set("view engine", 'ejs');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
@@ -27,13 +26,18 @@ app.use('/protected', jwtAuth);
 app.use("/protected",express.static('protected'));
 
 app.get('/', (req, res) => {
+  //console.log(res.render("menu"));
   res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/protected', jwtAuth, (req, res) => {
   //req.isAuthenticated() === true
   //res.json
-  res.sendFile(__dirname + '/protected/menu.html');
+  //res.sendFile(__dirname + '/protected/menu.html');
+  res.json({
+    login: "success"
+  });
+  
 });
 
 app.get('/protected/masterminds', jwtAuth, (req, res) => {
