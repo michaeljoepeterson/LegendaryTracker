@@ -72,7 +72,7 @@ app.get('/protected/heroes', jwtAuth, (req, res) => {
 
 app.get('/protected/henchmen', jwtAuth, (req, res) => {
   LegendaryData
-    .find({classification:"henchmen"})
+    .find({classification:"henchman"})
     .then(data => {
       res.json({
         data: data.map(

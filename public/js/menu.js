@@ -58,8 +58,77 @@ function getMasterminds(){
 	$.ajax(settings);	
 }
 
+function populateSchemeData(data){
+	console.log(data.data[0]);
+	options = createDataString(data);
+	$(".jsSchemeSelect").append(options);
+}
+
+function getSchemes(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/scheme",
+		success: populateSchemeData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function populateHenchmenData(data){
+	console.log(data.data[0]);
+	options = createDataString(data);
+	$(".jsHenchmenSelect").append(options);
+}
+
+function getHenchmen(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/henchmen",
+		success: populateHenchmenData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function populateVillainData(data){
+	//console.log(data.data[0]);
+	options = createDataString(data);
+	$(".jsVillainSelect").append(options);
+}
+
+function getVillains(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/villains",
+		success: populateVillainData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
 function getAuthSuccess(data){
-	console.log(data);
+	//console.log(data);
 	$(".jsUserName").text(sessionStorage.getItem("user") + " Logged In");
 	console.log(sessionStorage.getItem("user"));
 }
@@ -88,9 +157,13 @@ function getAuth(){
 }
 
 function initializeMenu(){
+	//possibly have optional paramters so that can select for expansions
 	getMasterminds();
 	getHeroes();
 	getAuth();
+	getSchemes();
+	getHenchmen();
+	getVillains();
 }
 
 $(initializeMenu);
