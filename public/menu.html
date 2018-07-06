@@ -19,7 +19,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link jsEnterScoresLink" href="">Enter Scores</a>
+					<a class="nav-link jsEnterScoresLink" href="menu.html">Enter Scores</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link jsHighScoreLink" href="">High Scores</a>
@@ -37,6 +37,10 @@
 		<h1>Enter Score Data</h1>
 	</header>
 	<form class="jsScoreEntry">
+		<label for="baseCheck">Base</label>
+		<input class="jsBaseCheck" type="checkbox" id="baseCheck" checked>
+		<label for="darkcityCheck">Dark City</label>
+		<input class="jsDarkCityCheck" type="checkbox" id="darkcityCheck" checked>
 		<label for="winSelect">Did You Win?</label>
 		<select class="jsWinSelect" id="winSelect">
 			<option value="y">Yes</option>
@@ -68,9 +72,11 @@
 		<select class="jsVillainSelect" id="villainSelect"><option value="none">None</option></select>
 		<button type="submit">Submit</button>
 	</form>
+
 	<div class="jsHighScores">
 	</div>
 	<div class="jsStats">
 	</div>
+	<div class="jsMessage"></div>
 </body>
 </html>

@@ -23,8 +23,25 @@ function createDataString(data){
 	return newString;
 }
 
+function checkDropdowns(){
+
+	//add get requests to api
+	$(".jsHeroSelect1").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+	});
+	$(".jsHeroSelect2").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+	});
+	$(".jsHeroSelect3").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+	});
+}
+
 function populateHeroData(data){
-	console.log(data);
+	//console.log(data);
 	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsHeroSelect1").append(options);
@@ -120,6 +137,7 @@ function getHenchmen(){
 
 function populateVillainData(data){
 	//console.log(data.data[0]);
+	console.log(choice);
 	options = createDataString(data);
 	$(".jsVillainSelect").append(options);
 }
@@ -127,6 +145,7 @@ function populateVillainData(data){
 function getVillains(){
 	//html href
 	//console.log("get")
+	let choice = "test";
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -171,11 +190,27 @@ function getAuth(){
 }
 
 function addedScore(data){
-	console.log(data);
+	//console.log(data);
+
+	$(".jsMessage").text("Score Added!");
+	$(".jsWinSelect").val("y");
+	$(".jsTurnInput").val("");
+	$(".jsEscapedVillains").val("");	
+	$(".jsSchemesInput").val("");
+	$(".jsBystanderInput").val("");
+	$(".jsVictoryPointInput").val("");
+	$(".jsMastermindSelect").val("none");
+	$(".jsHeroSelect1").val("none");
+	$(".jsHeroSelect2").val("none");
+	$(".jsHeroSelect3").val("none");
+	$(".jsHenchmenSelect").val("none");
+	$(".jsVillainSelect").val("none");
+
 }
 
 function addScoreError(err){
-	console.log(err);
+	//console.log(err);
+	$(".jsMessage").text("An error occured");
 }
 
 function addScore(){
@@ -212,7 +247,31 @@ function addScore(){
 		dataType: 'json',
 		contentType: 'application/json'
 	};
-	$.ajax(settings);
+		$.ajax(settings);
+	});
+}
+
+function checkBoxListener(){
+	//will have to make calls again to db then repopulate dropdowns with correct data
+	//can reuse functions if modify slightly
+	//add checks for checkboxes in the functions?
+	//before string is created check checkboxes then filter out data
+	$(".jsBaseCheck").change(function(){
+		if($(".jsBaseCheck").is(":checked")){
+			console.log("base checked");
+		}
+		else{
+			console.log("base unchecked");
+		}
+	});
+
+	$(".jsDarkCityCheck").change(function(){
+		if($(".jsDarkCityCheck").is(":checked")){
+			console.log("dark city checked");
+		}
+		else{
+			console.log("dark city unchecked");
+		}
 	});
 }
 
@@ -227,6 +286,8 @@ function initializeMenu(){
 	getHenchmen();
 	getVillains();
 	addScore();
+	checkDropdowns();
+	checkBoxListener();
 }
 
 $(initializeMenu);
