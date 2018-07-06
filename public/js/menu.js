@@ -1,16 +1,30 @@
 //console.log(sessionStorage.getItem("Bearer"));
 //console.log(sessionStorage.getItem("user"));
 
+function organizeDropdown(arr){
+	return arr.sort(function(a,b){
+		if(a.name < b.name){
+			return -1
+		}
+		if(a.name > b.name){
+			return 1
+		}
+		return 0
+	});
+}
+
 function createDataString(data){
 	let newString;
-	for (let i = 0;i < data.data.length;i++){
+	const newdata = organizeDropdown(data.data);
+	for (let i = 0;i < newdata.length;i++){
 		//console.log(data.data[i].name);
-		newString += `<option value="${data.data[i].name}">${data.data[i].name}</option>`;
+		newString += `<option value="${newdata[i].name}">${newdata[i].name}</option>`;
 	}
 	return newString;
 }
 
 function populateHeroData(data){
+	console.log(data);
 	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsHeroSelect1").append(options);
@@ -59,7 +73,7 @@ function getMasterminds(){
 }
 
 function populateSchemeData(data){
-	console.log(data.data[0]);
+	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsSchemeSelect").append(options);
 }
@@ -82,7 +96,7 @@ function getSchemes(){
 }
 
 function populateHenchmenData(data){
-	console.log(data.data[0]);
+	//console.log(data.data[0]);
 	options = createDataString(data);
 	$(".jsHenchmenSelect").append(options);
 }
@@ -146,7 +160,7 @@ function getAuth(){
 	const settings = {
 		method: "GET",
 		headers:{ 
-			"Authorization": 'Bearer ' + sessionStorage.Bearer
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
 		url: "/protected",
 		success: getAuthSuccess,
@@ -154,6 +168,52 @@ function getAuth(){
 	};
 	$.ajax(settings);
 	
+}
+
+function addedScore(data){
+	console.log(data);
+}
+
+function addScoreError(err){
+	console.log(err);
+}
+
+function addScore(){
+	$(".jsScoreEntry").submit(function(event){
+		event.preventDefault();
+		let scoreData = {
+			username:sessionStorage.getItem("user"),
+			score:{win: $(".jsWinSelect").val(),
+			numTurns: $(".jsTurnInput").val(),
+			numVillains: $(".jsEscapedVillains").val(),
+			numSchemes: $(".jsSchemesInput").val(),
+			numBystanders: $(".jsBystanderInput").val(),
+			victoryPoints: $(".jsVictoryPointInput").val(),
+			mastermind: $(".jsMastermindSelect").val(),
+			scheme: $(".jsSchemeSelect").val(),
+			hero1: $(".jsHeroSelect1").val(),
+			hero2: $(".jsHeroSelect2").val(),
+			hero3: $(".jsHeroSelect3").val(),
+			henchmen: $(".jsHenchmenSelect").val(),
+			villain: $(".jsVillainSelect").val()
+			}
+
+		};
+
+		const settings = {
+		method: "PUT",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/api/users/addscore",
+		data: JSON.stringify(scoreData),
+		success: addedScore,
+		error: addScoreError,
+		dataType: 'json',
+		contentType: 'application/json'
+	};
+	$.ajax(settings);
+	});
 }
 
 function initializeMenu(){
@@ -166,6 +226,7 @@ function initializeMenu(){
 	getSchemes();
 	getHenchmen();
 	getVillains();
+	addScore();
 }
 
 $(initializeMenu);

@@ -144,17 +144,43 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	//res.json({message:"success"});
-	let {username,scores} =  req.body;
-	return User.findOneAndUpdate({"username":username}, {$set:{scores:[1,"2",{
-		test:"test",
-		score: 2
-	}]}})
+	let {username,score} =  req.body;
+
+	for (let key in req.body){
+		if(key === "username" || key === "score"){
+			continue;
+		}
+		else{
+			return res.json({code:500, message:"an error occured"});
+		}
+		
+	}
+	//need score id to track scores
+	//need to find the user and return the scores so that can append score
+	return User.find({"username":username})
+
+	.then(user => {
+		let data = user[0].scores;
+		//will need to iterate over scores to figure out id or possibly just have a bunch of random numbers for id, larger the number less likely it will be repeated
+		//console.log(data.length);
+		let maxId = 0;
+		for (let i = 0; i < data.length; i++){
+			if(data[i].id > maxId){
+				maxId = data[i].id
+			}
+		}
+		score.id = maxId + 1;
+		data.push(score);
+		//console.log(score);
+		return User.findOneAndUpdate({"username":username}, {$set:{scores:data}})
+	})
+
 	.then(user =>{
-		console.log(user);
-		return res.json({"user":user});
+		//console.log(user);
+		return res.json({message:"success"});
 	})
 	.catch(err => {
-		console.log(err);
+		//console.log(err);
 		return res.json({"err":err});
 	});
 });

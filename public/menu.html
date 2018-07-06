@@ -38,20 +38,20 @@
 	</header>
 	<form class="jsScoreEntry">
 		<label for="winSelect">Did You Win?</label>
-		<select id="winSelect">
+		<select class="jsWinSelect" id="winSelect">
 			<option value="y">Yes</option>
 			<option value="n">No</option>
 		</select>
 		<label for="turnInput">Number Of Turns</label>
-		<input type="number" id="turnInput">
+		<input class="jsTurnInput" type="number" id="turnInput">
 		<label for="escapedVilliansInput">Number Of Excaped Villains</label>
-		<input type="number" id="escapedVilliansInput">
+		<input class="jsEscapedVillains" type="number" id="escapedVilliansInput">
 		<label for="schemesInput">Number Of Schemes</label>
-		<input type="number" id="schemesInput">
+		<input class="jsSchemesInput" type="number" id="schemesInput">
 		<label for="bystanderInput">Number Of Lost Bystanders</label>
-		<input type="number" id="bystanderInput">
+		<input class="jsBystanderInput" type="number" id="bystanderInput">
 		<label for="victoryPointInput">Total Victory Points</label>
-		<input type="number" id="victoryPointInput">
+		<input class="jsVictoryPointInput" type="number" id="victoryPointInput">
 		<label for="mastermindSelect">Select Mastermind</label>
 		<select class="jsMastermindSelect" id="mastermindSelect"><option value="none">None</option></select>
 		<label for="schemeSelect">Select Scheme</label>
@@ -66,7 +66,7 @@
 		<select class="jsHenchmenSelect" id="henchmenSelect"><option value="none">None</option></select>
 		<label for="villainSelect">Select Villain Group</label>
 		<select class="jsVillainSelect" id="villainSelect"><option value="none">None</option></select>
-
+		<button type="submit">Submit</button>
 	</form>
 	<div class="jsHighScores">
 	</div>
