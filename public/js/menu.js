@@ -158,6 +158,8 @@ function getAuth(){
 
 function initializeMenu(){
 	//possibly have optional paramters so that can select for expansions
+	//https://developer.marvel.com/
+	//https://comicvine.gamespot.com/api/
 	getMasterminds();
 	getHeroes();
 	getAuth();

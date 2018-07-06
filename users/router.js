@@ -1,14 +1,14 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
 const {User} = require('../models/userData');
-
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
-module.exports = {router};
+
 
 router.post('/',jsonParser,(req,res) => {
 	//check for illegal characters
@@ -109,7 +109,7 @@ router.post('/',jsonParser,(req,res) => {
       location: tooSmallField || tooLargeField
     });
   }
-	//need to add other checks such as length, trim, check for string, check for illegal chars
+	
 	let {username, password} = req.body;
 	return User.find({username}).count()
 	.then(count => {
@@ -139,3 +139,24 @@ router.post('/',jsonParser,(req,res) => {
 		res.status(500).json({code:500, message:'internal server error'});
 	});
 });
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
+	//res.json({message:"success"});
+	let {username,scores} =  req.body;
+	return User.findOneAndUpdate({"username":username}, {$set:{scores:[1,"2",{
+		test:"test",
+		score: 2
+	}]}})
+	.then(user =>{
+		console.log(user);
+		return res.json({"user":user});
+	})
+	.catch(err => {
+		console.log(err);
+		return res.json({"err":err});
+	});
+});
+
+module.exports = {router};
