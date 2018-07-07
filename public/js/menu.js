@@ -11,9 +11,17 @@ function resetPage(){
 	$(".jsHeroSelect1").empty();
 	$(".jsHeroSelect2").empty();
 	$(".jsHeroSelect3").empty();
+	$(".jsMastermindSelect").empty();
+	$(".jsSchemeSelect").empty();
+	$(".jsHenchmenSelect").empty();
+	$(".jsVillainSelect").empty();
 	$(".jsHeroSelect1").append(noneString);
 	$(".jsHeroSelect2").append(noneString);
 	$(".jsHeroSelect3").append(noneString);
+	$(".jsMastermindSelect").append(noneString);
+	$(".jsSchemeSelect").append(noneString);
+	$(".jsHenchmenSelect").append(noneString);
+	$(".jsVillainSelect").append(noneString);
 }
 
 function organizeDropdown(arr){
@@ -70,7 +78,7 @@ function filterData(data){
 		//console.log(copyData.data[i].expansion);
 		//console.log("test spice");
 		if(filterBy.includes(copyData.data[i].expansion)){
-			console.log(copyData.data[i]);
+			//console.log(copyData.data[i]);
 			copyData.data.splice(i,1);	
 		}
 	}
@@ -79,13 +87,12 @@ function filterData(data){
 }
 
 function populateHeroData(data){
-
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsHeroSelect1").append(options);
 	$(".jsHeroSelect2").append(options);
 	$(".jsHeroSelect3").append(options);
-	//if(".js")
+
 }
 
 function getHeroes(){
@@ -107,7 +114,8 @@ function getHeroes(){
 
 function populateMastermindData(data){
 	//console.log(data.data[0]);
-	options = createDataString(data);
+	let newData = filterData(data);
+	options = createDataString(newData);
 	$(".jsMastermindSelect").append(options);
 }
 
@@ -130,7 +138,8 @@ function getMasterminds(){
 
 function populateSchemeData(data){
 	//console.log(data.data[0]);
-	options = createDataString(data);
+	let newData = filterData(data);
+	options = createDataString(newData);
 	$(".jsSchemeSelect").append(options);
 }
 
@@ -153,7 +162,8 @@ function getSchemes(){
 
 function populateHenchmenData(data){
 	//console.log(data.data[0]);
-	options = createDataString(data);
+	let newData = filterData(data);
+	options = createDataString(newData);
 	$(".jsHenchmenSelect").append(options);
 }
 
@@ -176,7 +186,8 @@ function getHenchmen(){
 
 function populateVillainData(data){
 	//console.log(data.data[0]);
-	options = createDataString(data);
+	let newData = filterData(data);
+	options = createDataString(newData);
 	$(".jsVillainSelect").append(options);
 }
 
@@ -294,13 +305,21 @@ function checkBoxListener(){
 			console.log("base checked");
 			resetPage();
 			expansionObj["base"] = true;
+			getMasterminds();
 			getHeroes();
+			getSchemes();
+			getHenchmen();
+			getVillains();
 		}
 		else{
 			console.log("base unchecked");
 			resetPage();
 			expansionObj["base"] = false;
+			getMasterminds();
 			getHeroes();
+			getSchemes();
+			getHenchmen();
+			getVillains();
 		}
 		
 	});
@@ -310,13 +329,21 @@ function checkBoxListener(){
 			console.log("dark city checked");
 			resetPage();
 			expansionObj["Dark City"] = true;
+			getMasterminds();
 			getHeroes();
+			getSchemes();
+			getHenchmen();
+			getVillains();
 		}
 		else{
 			console.log("dark city unchecked");
 			resetPage();
 			expansionObj["Dark City"] = false;
+			getMasterminds();
 			getHeroes();
+			getSchemes();
+			getHenchmen();
+			getVillains();
 		}
 	});
 }
@@ -325,9 +352,9 @@ function initializeMenu(){
 	//possibly have optional paramters so that can select for expansions
 	//https://developer.marvel.com/
 	//https://comicvine.gamespot.com/api/
+	getAuth();
 	getMasterminds();
 	getHeroes();
-	getAuth();
 	getSchemes();
 	getHenchmen();
 	getVillains();
