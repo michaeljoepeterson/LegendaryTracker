@@ -1,6 +1,21 @@
 //console.log(sessionStorage.getItem("Bearer"));
 //console.log(sessionStorage.getItem("user"));
 
+let expansionObj = {
+	"base":true,
+	"Dark City":true
+};
+
+function resetPage(){
+	const noneString = `<option value="none">None</option>`
+	$(".jsHeroSelect1").empty();
+	$(".jsHeroSelect2").empty();
+	$(".jsHeroSelect3").empty();
+	$(".jsHeroSelect1").append(noneString);
+	$(".jsHeroSelect2").append(noneString);
+	$(".jsHeroSelect3").append(noneString);
+}
+
 function organizeDropdown(arr){
 	return arr.sort(function(a,b){
 		if(a.name < b.name){
@@ -40,13 +55,37 @@ function checkDropdowns(){
 	});
 }
 
+function filterData(data){
+	let copyData = data;
+	let finalData;
+	let filterBy = []
+	for(let key in expansionObj){
+		if (expansionObj[key]===false){
+			filterBy.push(key);
+		}
+	}
+	console.log(filterBy);
+	//console.log(filterBy);
+	for(let i=copyData.data.length -1; i >=0 ; i--){
+		//console.log(copyData.data[i].expansion);
+		//console.log("test spice");
+		if(filterBy.includes(copyData.data[i].expansion)){
+			console.log(copyData.data[i]);
+			copyData.data.splice(i,1);	
+		}
+	}
+	console.log(copyData);
+	return copyData;
+}
+
 function populateHeroData(data){
-	//console.log(data);
-	//console.log(data.data[0]);
-	options = createDataString(data);
+
+	let newData = filterData(data);
+	options = createDataString(newData);
 	$(".jsHeroSelect1").append(options);
 	$(".jsHeroSelect2").append(options);
 	$(".jsHeroSelect3").append(options);
+	//if(".js")
 }
 
 function getHeroes(){
@@ -137,15 +176,12 @@ function getHenchmen(){
 
 function populateVillainData(data){
 	//console.log(data.data[0]);
-	console.log(choice);
 	options = createDataString(data);
 	$(".jsVillainSelect").append(options);
 }
 
 function getVillains(){
-	//html href
 	//console.log("get")
-	let choice = "test";
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -172,8 +208,7 @@ function getAuthError(err){
 	window.location.href = "/index.html";
 }
 
-function getAuth(){
-	//html href	
+function getAuth(){	
 	console.log("Attempt to get menu");
 	
 	const settings = {
@@ -190,7 +225,6 @@ function getAuth(){
 }
 
 function addedScore(data){
-	//console.log(data);
 
 	$(".jsMessage").text("Score Added!");
 	$(".jsWinSelect").val("y");
@@ -252,25 +286,37 @@ function addScore(){
 }
 
 function checkBoxListener(){
-	//will have to make calls again to db then repopulate dropdowns with correct data
-	//can reuse functions if modify slightly
-	//add checks for checkboxes in the functions?
-	//before string is created check checkboxes then filter out data
+
 	$(".jsBaseCheck").change(function(){
+		//getHeroes();
+		
 		if($(".jsBaseCheck").is(":checked")){
 			console.log("base checked");
+			resetPage();
+			expansionObj["base"] = true;
+			getHeroes();
 		}
 		else{
 			console.log("base unchecked");
+			resetPage();
+			expansionObj["base"] = false;
+			getHeroes();
 		}
+		
 	});
 
 	$(".jsDarkCityCheck").change(function(){
 		if($(".jsDarkCityCheck").is(":checked")){
 			console.log("dark city checked");
+			resetPage();
+			expansionObj["Dark City"] = true;
+			getHeroes();
 		}
 		else{
 			console.log("dark city unchecked");
+			resetPage();
+			expansionObj["Dark City"] = false;
+			getHeroes();
 		}
 	});
 }
