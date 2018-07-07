@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs');
 const userSchema = mongoose.Schema({
 	username: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
-	scores: {type: Array}
+	scores: {type: Array},
+	wins: {type:Number, default:0},
+	matches: {type:Number, default:0}
 });
 
 userSchema.methods.serialize = function(){

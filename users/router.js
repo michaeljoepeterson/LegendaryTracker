@@ -161,8 +161,11 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 
 	.then(user => {
 		let data = user[0].scores;
-		//will need to iterate over scores to figure out id or possibly just have a bunch of random numbers for id, larger the number less likely it will be repeated
 		//console.log(data.length);
+		let winCount = 0;
+		if (score.win === "y"){
+			winCount++;
+		}
 		let maxId = 0;
 		for (let i = 0; i < data.length; i++){
 			if(data[i].id > maxId){
@@ -172,7 +175,7 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 		score.id = maxId + 1;
 		data.push(score);
 		//console.log(score);
-		return User.findOneAndUpdate({"username":username}, {$set:{scores:data}})
+		return User.findOneAndUpdate({"username":username}, {$set:{scores:data}, $inc:{wins:winCount,matches:1}})
 	})
 
 	.then(user =>{
