@@ -8,7 +8,9 @@ const userSchema = mongoose.Schema({
 	password: {type: String, required: true},
 	scores: {type: Array},
 	wins: {type:Number, default:0},
-	matches: {type:Number, default:0}
+	matches: {type:Number, default:0},
+	highScores: {type:Array},
+	highScoresPpt: {type:Array}
 });
 
 userSchema.methods.serialize = function(){

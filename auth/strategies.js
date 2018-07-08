@@ -12,7 +12,7 @@ const localStrategy = new LocalStrategy((username,password,callback) => {
 		user = _user;
 		//console.log(user);
 		if(!user){
-			console.log("error");
+			//console.log("error");
 			return Promise.reject({
 				reason: 'LoginError',
 				message: 'Incorrect username or password'
@@ -33,7 +33,7 @@ const localStrategy = new LocalStrategy((username,password,callback) => {
 		return callback(null, user);
 	})
 	.catch(err => {
-		console.log(err.reason === "LoginError");
+		//console.log(err.reason === "LoginError");
 		if(err.reason === "LoginError"){
 			return callback(null,false,err);
 		}

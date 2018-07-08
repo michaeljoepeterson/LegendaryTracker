@@ -380,6 +380,11 @@ const dataLegendary = [
 		classification: "hero",
 		name: "Hulk",
 		expansion: "base"
+	},
+	{
+		classification: "hero",
+		name: "Ironman",
+		expansion: "base"
 	}
 
 ];

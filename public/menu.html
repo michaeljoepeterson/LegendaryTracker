@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>Main</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="//code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
@@ -11,7 +12,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="jsUserName navbar-brand" href="menu.html"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" href="#" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -48,15 +49,15 @@
 			<option value="n">No</option>
 		</select>
 		<label for="turnInput">Number Of Turns</label>
-		<input class="jsTurnInput" type="number" id="turnInput">
+		<input class="jsTurnInput" type="number" id="turnInput" value="0">
 		<label for="escapedVilliansInput">Number Of Excaped Villains</label>
-		<input class="jsEscapedVillains" type="number" id="escapedVilliansInput">
+		<input class="jsEscapedVillains" type="number" id="escapedVilliansInput" value="0">
 		<label for="schemesInput">Number Of Schemes</label>
-		<input class="jsSchemesInput" type="number" id="schemesInput">
+		<input class="jsSchemesInput" type="number" id="schemesInput" value="0">
 		<label for="bystanderInput">Number Of Lost Bystanders</label>
-		<input class="jsBystanderInput" type="number" id="bystanderInput">
+		<input class="jsBystanderInput" type="number" id="bystanderInput" value="0">
 		<label for="victoryPointInput">Total Victory Points</label>
-		<input class="jsVictoryPointInput" type="number" id="victoryPointInput">
+		<input class="jsVictoryPointInput" type="number" id="victoryPointInput" value="0">
 		<label for="mastermindSelect">Select Mastermind</label>
 		<select class="jsMastermindSelect" id="mastermindSelect"><option value="none">None</option></select>
 		<label for="schemeSelect">Select Scheme</label>

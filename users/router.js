@@ -142,6 +142,21 @@ router.post('/',jsonParser,(req,res) => {
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+function compareScores(scoreArray,highScoreArray,filterType){
+	//need to look through, sort and add if score is high
+	//could I make this function work for all ways I want to filter?
+	//check the type of filterType
+	//if its num should be filtered by ppt or total
+	//otherwise its one of other choices
+	//use this function in a get request as well
+	let finalHighScores = highScoreArray;
+	console.log("sort arrays");
+	if (finalHighScores.length === 0){
+		finalHighScores.push(scoreArray[0])
+		return finalHighScores
+	}
+}
+
 router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	//res.json({message:"success"});
 	let {username,score} =  req.body;
@@ -162,6 +177,11 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	.then(user => {
 		let data = user[0].scores;
 		//console.log(data.length);
+		const pointsPerTurn = score.victoryPoints / score.numTurns;
+		const totalScore = score.victoryPoints - (4 * score.numBystanders) - (3 * score.numSchemes) - (score.numVillains);
+		score.pointsPerTurn = pointsPerTurn;
+		score.totalScore = totalScore;
+		compareScores([],[]);
 		let winCount = 0;
 		if (score.win === "y"){
 			winCount++;

@@ -239,17 +239,18 @@ function addedScore(data){
 
 	$(".jsMessage").text("Score Added!");
 	$(".jsWinSelect").val("y");
-	$(".jsTurnInput").val("");
-	$(".jsEscapedVillains").val("");	
-	$(".jsSchemesInput").val("");
-	$(".jsBystanderInput").val("");
-	$(".jsVictoryPointInput").val("");
+	$(".jsTurnInput").val("0");
+	$(".jsEscapedVillains").val("0");	
+	$(".jsSchemesInput").val("0");
+	$(".jsBystanderInput").val("0");
+	$(".jsVictoryPointInput").val("0");
 	$(".jsMastermindSelect").val("none");
 	$(".jsHeroSelect1").val("none");
 	$(".jsHeroSelect2").val("none");
 	$(".jsHeroSelect3").val("none");
 	$(".jsHenchmenSelect").val("none");
 	$(".jsVillainSelect").val("none");
+	$(".jsSchemeSelect").val("none");
 
 }
 
@@ -352,6 +353,7 @@ function initializeMenu(){
 	//possibly have optional paramters so that can select for expansions
 	//https://developer.marvel.com/
 	//https://comicvine.gamespot.com/api/
+	//possibly export data as csv
 	getAuth();
 	getMasterminds();
 	getHeroes();
