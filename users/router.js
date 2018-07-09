@@ -142,19 +142,47 @@ router.post('/',jsonParser,(req,res) => {
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+function organizeScores(scoreArray,filter){
+	return scoreArray.sort(function(a,b){
+		return b[filter] - a[filter];
+	});
+}
+//check functionality for max case
 function compareScores(scoreArray,highScoreArray,filterType){
-	//need to look through, sort and add if score is high
-	//could I make this function work for all ways I want to filter?
-	//check the type of filterType
-	//if its num should be filtered by ppt or total
-	//otherwise its one of other choices
-	//use this function in a get request as well
-	let finalHighScores = highScoreArray;
-	console.log("sort arrays");
-	if (finalHighScores.length === 0){
-		finalHighScores.push(scoreArray[0])
-		return finalHighScores
+	//filtertype should be pointsPerTurn, totalScore, 
+	
+	let finalHighScores = highScoreArray.slice();
+	
+	if (highScoreArray.length === 0){
+		finalHighScores.push(scoreArray);
+		
+		return finalHighScores;
 	}
+	else{
+		for (let i = 0;i < highScoreArray.length;i++){
+			
+			if(scoreArray[filterType] >= highScoreArray[i][filterType]){
+				console.log(highScoreArray[i][filterType]);
+				finalHighScores.push(scoreArray);
+				console.log("added item");
+				break;
+			}
+			
+			if(highScoreArray.length < 10 && i === (highScoreArray.length - 1)){
+				console.log("added item other case");
+				finalHighScores.push(scoreArray);
+			}
+			
+		}
+		
+	}
+	
+	finalHighScores = organizeScores(finalHighScores,filterType);
+	if(finalHighScores.length > 10){
+		finalHighScores.pop();
+	}
+	console.log("finished adding");
+	return finalHighScores;
 }
 
 router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
@@ -176,15 +204,25 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 
 	.then(user => {
 		let data = user[0].scores;
+		let totalHighScore = user[0].highScores;
+		let pptHighScore = user[0].highScoresPpt;
+		let newTotalHighScore;
+		let newPptHighScore;
 		//console.log(data.length);
 		const pointsPerTurn = score.victoryPoints / score.numTurns;
 		const totalScore = score.victoryPoints - (4 * score.numBystanders) - (3 * score.numSchemes) - (score.numVillains);
 		score.pointsPerTurn = pointsPerTurn;
 		score.totalScore = totalScore;
-		compareScores([],[]);
+		
 		let winCount = 0;
 		if (score.win === "y"){
 			winCount++;
+			newTotalHighScore = compareScores(score,totalHighScore,"totalScore");
+			newPptHighScore = compareScores(score,pptHighScore,"pointsPerTurn");
+		}
+		else{
+			newTotalHighScore = totalHighScore;
+			newPptHighScore = pptHighScore;
 		}
 		let maxId = 0;
 		for (let i = 0; i < data.length; i++){
@@ -194,8 +232,8 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 		}
 		score.id = maxId + 1;
 		data.push(score);
-		//console.log(score);
-		return User.findOneAndUpdate({"username":username}, {$set:{scores:data}, $inc:{wins:winCount,matches:1}})
+		console.log(score);
+		return User.findOneAndUpdate({"username":username}, {$set:{scores:data,highScores:newTotalHighScore,highScoresPpt:newPptHighScore}, $inc:{wins:winCount,matches:1}})
 	})
 
 	.then(user =>{
