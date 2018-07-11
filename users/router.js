@@ -164,12 +164,12 @@ function compareScores(scoreArray,highScoreArray,filterType){
 			if(scoreArray[filterType] >= highScoreArray[i][filterType]){
 				console.log(highScoreArray[i][filterType]);
 				finalHighScores.push(scoreArray);
-				console.log("added item");
+				//console.log("added item");
 				break;
 			}
 			
 			if(highScoreArray.length < 10 && i === (highScoreArray.length - 1)){
-				console.log("added item other case");
+				//console.log("added item other case");
 				finalHighScores.push(scoreArray);
 			}
 			
@@ -181,7 +181,7 @@ function compareScores(scoreArray,highScoreArray,filterType){
 	if(finalHighScores.length > 10){
 		finalHighScores.pop();
 	}
-	console.log("finished adding");
+	//console.log("finished adding");
 	return finalHighScores;
 }
 
@@ -197,6 +197,25 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 			return res.json({code:500, message:"an error occured"});
 		}
 		
+	}
+
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+	const checkCharsScore = Object.keys(score).find(key =>{
+		const check = legalChars.test(score[key]);
+		if(!check){
+			return score[key];
+		}
+	});
+
+	const checkChars = legalChars.test(username);
+	
+	if (!checkChars || checkCharsScore){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
 	}
 	//need score id to track scores
 	//need to find the user and return the scores so that can append score
@@ -237,13 +256,57 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	})
 
 	.then(user =>{
-		//console.log(user);
+		
 		return res.json({message:"success"});
 	})
 	.catch(err => {
 		//console.log(err);
 		return res.json({"err":err});
 	});
+});
+
+router.get("/highScore", jwtAuth,jsonParser,(req,res) =>{
+	
+	let username =  req.query.username;
+	console.log(username);
+	for (let key in req.query){
+		if(key === "username"){
+			continue;
+		}
+		else{
+			return res.json({code:500, message:"an error occured"});
+		}
+		
+	}
+
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+
+	const checkChars = legalChars.test(username);
+	
+	if (!checkChars){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
+	}
+
+	return User.find({"username":username})
+
+	.then(user => {
+		//console.log(user);
+		//console.log(user[0].highScores);
+		return res.json({
+			highScores:user[0].highScores,
+			highScoresPpt:user[0].highScoresPpt
+		});
+	})
+	.catch(err => {
+		//console.log(err);
+		return res.json({"err":err});
+	});
+
 });
 
 module.exports = {router};

@@ -258,6 +258,9 @@ function addScoreError(err){
 	console.log(err);
 	$(".jsMessage").text("An error occured");
 	//on unauthorized need to go back to sign in screen
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function addScore(){
