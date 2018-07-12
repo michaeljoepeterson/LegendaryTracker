@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>High Scores</title>
+	<title>Stats</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="//code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/scores.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/scores.css">
+	<link rel="stylesheet" type="text/css" href="css/stats.css">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,10 +23,10 @@
 				<li class="nav-item">
 					<a class="nav-link jsEnterScoresLink" href="menu.html">Enter Scores</a>
 				</li>
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="scores.html">High Scores</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="stats.html">Stats</a>
 				</li>
 				<li class="nav-item">
@@ -36,21 +36,15 @@
 		</div>
 	</nav>
 	<header role="banner">
-		<h1>High Scores</h1>
+		<h1>Stats</h1>
 	</header>
-		<!--two layouts one for mobile and table for pc?
-		bootstrap table
-		edit/delete button
-		-->
-		<main role="main">
-		
-		<form>
-			<label class="scoreLabel" for="scoreSelect">High Scores Organized by </label>
-			<select class="jsScoreSelect" id="scoreSelect">
-				<option value="total">Total Score</option>
-				<option value="ppt">Points Per Turn</option>
-			</select>
-		</form>
+	<h2 class="jsWins">Matches:</h2>
+	<h2 class="jsWins">Wins:</h2>
+	<h2 class="jsLosses">Losses:</h2>
+	<h2 class="jsPercentage">Win Percentage:</h2>
+	<br>
+	<h2>Score History</h2>
+	<main role="main">
 		<div class="table-responsive scoreTableTotal">
 			<table class="table scoreTable jsTableTotalScore">
 				<tr>
@@ -64,24 +58,6 @@
 					<th>Number of Schemes</th>
 					<th>Number of Turns</th>
 					<th>Number of Escaped Villains</th>
-					<th>Points Per Turn</th>
-					<th>Total Score</th>
-				</tr>
-			</table>
-		</div>
-		<div class="table-responsive scoreTableppt">
-			<table class="table scoreTable jsTablePpt">
-				<tr>
-					<th>Score</th>
-					<th>Heroes</th>
-					<th>Mastermind</th>
-					<th>Scheme</th>
-					<th>Villain Group</th>
-					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>

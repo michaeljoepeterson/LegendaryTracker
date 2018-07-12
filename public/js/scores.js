@@ -1,18 +1,33 @@
+function checkDropdown(){
+	$(".jsScoreSelect").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+		if (selectedVal === "total"){
+			$(".scoreTableTotal").css("display","initial");
+			$(".scoreTableppt").css("display","none");
+		}
+		else if(selectedVal === "ppt"){
+			$(".scoreTableTotal").css("display","none");
+			$(".scoreTableppt").css("display","initial");
+		}
+	});
+}
+
 function createScoreString(score,index){
 	let scoreNum = index + 1;
 	let returnString = `<tr>
-				<th>${scoreNum}</th>
-				<th>${score.hero1},${score.hero2},${score.hero3}</th>
-				<th>${score.mastermind}</th>
-				<th>${score.scheme}</th>
-				<th>${score.villain}</th>
-				<th>${score.henchmen}</th>
-				<th>${score.numBystanders}</th>
-				<th>${score.numSchemes}</th>
-				<th>${score.numTurns}</th>
-				<th>${score.numVillains}</th>
-				<th>${score.pointsPerTurn}</th>
-				<th>${score.totalScore}</th>
+				<td>${scoreNum}</td>
+				<td>${score.hero1},${score.hero2},${score.hero3}</td>
+				<td>${score.mastermind}</td>
+				<td>${score.scheme}</td>
+				<td>${score.villain}</td>
+				<td>${score.henchmen}</td>
+				<td>${score.numBystanders}</td>
+				<td>${score.numSchemes}</td>
+				<td>${score.numTurns}</td>
+				<td>${score.numVillains}</td>
+				<td>${score.pointsPerTurn}</td>
+				<td>${score.totalScore}</td>
 			</tr>`
 	return returnString;
 }
@@ -84,6 +99,7 @@ function getAuth(){
 function initializePage(){	
 	getAuth();
 	getHighScores();
+	checkDropdown();
 }
 
 $(initializePage);

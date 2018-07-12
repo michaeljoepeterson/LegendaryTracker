@@ -1,3 +1,10 @@
+.scoreTableppt{
+	display: none;
+}
+
+.scoreTableTotal{
+	display:initial;
+}
 
 .scoreTable, th, td{
 	border: 1px solid black;

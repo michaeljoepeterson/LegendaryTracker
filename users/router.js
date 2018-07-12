@@ -265,10 +265,10 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	});
 });
 
-router.get("/highScore", jwtAuth,jsonParser,(req,res) =>{
+router.get("/highScore", jwtAuth,(req,res) =>{
 	
 	let username =  req.query.username;
-	console.log(username);
+	//console.log(username);
 	for (let key in req.query){
 		if(key === "username"){
 			continue;
@@ -295,18 +295,59 @@ router.get("/highScore", jwtAuth,jsonParser,(req,res) =>{
 	return User.find({"username":username})
 
 	.then(user => {
-		//console.log(user);
-		//console.log(user[0].highScores);
+		
 		return res.json({
 			highScores:user[0].highScores,
 			highScoresPpt:user[0].highScoresPpt
 		});
 	})
 	.catch(err => {
-		//console.log(err);
+		
 		return res.json({"err":err});
 	});
 
+});
+
+router.get("/stats",jwtAuth,(req,res) =>{
+	let username =  req.query.username;
+	//console.log(username);
+	for (let key in req.query){
+		if(key === "username"){
+			continue;
+		}
+		else{
+			return res.json({code:500, message:"an error occured"});
+		}
+		
+	}
+
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+
+	const checkChars = legalChars.test(username);
+	
+	if (!checkChars){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
+	}
+
+	return User.find({"username":username})
+
+	.then(user => {
+		
+		return res.json({
+			scores:user[0].scores,
+			wins:user[0].wins,
+			matches: user[0].matches
+		});
+	})
+	.catch(err => {
+		
+		return res.json({"err":err});
+	});
 });
 
 module.exports = {router};
