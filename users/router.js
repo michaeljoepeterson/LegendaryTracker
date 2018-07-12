@@ -337,9 +337,15 @@ router.get("/stats",jwtAuth,(req,res) =>{
 	return User.find({"username":username})
 
 	.then(user => {
-		
+		//console.log(user[0].scores);
+		let userTotal = user[0].scores.slice();
+		let userPpt = user[0].scores.slice();
+		let newTotalHighScore = organizeScores(userTotal,"totalScore");
+		let newPptHighScore = organizeScores(userPpt,"pointsPerTurn");
+		//console.log(newPptHighScore);
 		return res.json({
-			scores:user[0].scores,
+			scoresTotal:newTotalHighScore,
+			scoresPpt:newPptHighScore,
 			wins:user[0].wins,
 			matches: user[0].matches
 		});

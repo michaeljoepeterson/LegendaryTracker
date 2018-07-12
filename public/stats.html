@@ -38,17 +38,24 @@
 	<header role="banner">
 		<h1>Stats</h1>
 	</header>
-	<h2 class="jsWins">Matches:</h2>
+	<h2 class="jsMatches">Matches:</h2>
 	<h2 class="jsWins">Wins:</h2>
 	<h2 class="jsLosses">Losses:</h2>
 	<h2 class="jsPercentage">Win Percentage:</h2>
 	<br>
-	<h2>Score History</h2>
+	<form>
+		<label class="scoreLabel" for="scoreSelect">Score History Organized by </label>
+			<select class="jsScoreSelect" id="scoreSelect">
+				<option value="total">Total Score</option>
+				<option value="ppt">Points Per Turn</option>
+			</select>
+		</form>
 	<main role="main">
 		<div class="table-responsive scoreTableTotal">
 			<table class="table scoreTable jsTableTotalScore">
 				<tr>
 					<th>Score</th>
+					<th>Win</th>
 					<th>Heroes</th>
 					<th>Mastermind</th>
 					<th>Scheme</th>
@@ -58,6 +65,25 @@
 					<th>Number of Schemes</th>
 					<th>Number of Turns</th>
 					<th>Number of Escaped Villains</th>
+					<th>Points Per Turn</th>
+					<th>Total Score</th>
+				</tr>
+			</table>
+		</div>
+		<div class="table-responsive scoreTableppt">
+			<table class="table scoreTable jsTablePpt">
+				<tr>
+					<th>Score</th>
+					<th>Win</th>
+					<th>Heroes</th>
+					<th>Mastermind</th>
+					<th>Scheme</th>
+					<th>Villain Group</th>
+					<th>Henchmen Goup</th>
+					<th>Bystanders Lost</th>
+					<th>Number of Schemes</th>
+					<th>Number of Turns</th>
+					<th>Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>

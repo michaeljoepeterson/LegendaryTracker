@@ -3,7 +3,7 @@
 }
 
 .scoreTableTotal{
-	display:initial;
+	display:inherit;
 }
 
 .scoreTable, th, td{

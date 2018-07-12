@@ -3,12 +3,12 @@ function checkDropdown(){
 		let selectedVal = $(this).find(':selected').val();
 		console.log(selectedVal);
 		if (selectedVal === "total"){
-			$(".scoreTableTotal").css("display","initial");
+			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
 		}
 		else if(selectedVal === "ppt"){
 			$(".scoreTableTotal").css("display","none");
-			$(".scoreTableppt").css("display","initial");
+			$(".scoreTableppt").css("display","inherit");
 		}
 	});
 }
