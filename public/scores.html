@@ -50,6 +50,17 @@
 				<option value="total">Total Score</option>
 				<option value="ppt">Points Per Turn</option>
 			</select>
+			<label class="scoreLabel" for="filterSelect">Filter by </label>
+			<select class="jsFilterSelect" id="filterSelect">
+				<option value="none">None</option>
+				<option value="mastermind">Mastermind</option>
+				<option value="scheme">Scheme</option>
+				<option value="hero">Hero</option>
+			</select>
+			<label class="scoreLabel jsNextFilterLabel" for="nextFilterSelect"></label>
+			<select class="jsNextFilterSelect" id="nextFilterSelect">
+				<option value="none">None</option>
+			</select>
 		</form>
 		<div class="table-responsive scoreTableTotal">
 			<table class="table scoreTable jsTableTotalScore">
@@ -85,6 +96,14 @@
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>
+			</table>
+		</div>
+		<div class="table-responsive filterTable">
+			<table class="table scoreTable">
+			</table>
+		</div>
+		<div class="table-responsive filterTableppt">
+			<table class="table scoreTable">
 			</table>
 		</div>
 	</main>

@@ -1,14 +1,120 @@
+function emptyDropdown(){
+	$(".jsNextFilterSelect").empty();
+}
+
+function organizeDropdown(arr){
+	return arr.sort(function(a,b){
+		if(a.name < b.name){
+			return -1
+		}
+		if(a.name > b.name){
+			return 1
+		}
+		return 0
+	});
+}
+
+function createDataString(data){
+	let newString;
+	const newdata = organizeDropdown(data.data);
+	for (let i = 0;i < newdata.length;i++){
+		//console.log(data.data[i].name);
+		newString += `<option value="${newdata[i].name}">${newdata[i].name}</option>`;
+	}
+	return newString;
+}
+
+function populateData(data){
+	options = createDataString(data);
+	$(".jsNextFilterSelect").append(options);
+}
+
+function getSchemes(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/scheme",
+		success: populateData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function getMasterminds(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/masterminds",
+		success: populateData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function getHeroes(){
+	//html href
+	//console.log("get")
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/heroes",
+		success: populateData,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
 function checkDropdown(){
 	$(".jsScoreSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
-		if (selectedVal === "total"){
+		//console.log(selectedVal);
+		let filterType = $(".jsFilterSelect").val(); 
+		if (selectedVal === "total" && filterType === "none"){
 			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
 		}
-		else if(selectedVal === "ppt"){
+		else if(selectedVal === "ppt" && filterType === "none"){
 			$(".scoreTableTotal").css("display","none");
 			$(".scoreTableppt").css("display","inherit");
+		}
+	});
+	$(".jsFilterSelect").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+		if(selectedVal === "none"){
+			emptyDropdown();
+			$(".jsNextFilterSelect").hide();
+		}
+		else if(selectedVal === "mastermind"){
+			emptyDropdown();
+			$(".jsNextFilterSelect").show();
+			getMasterminds();
+		}
+		else if(selectedVal === "scheme"){
+			emptyDropdown();
+			$(".jsNextFilterSelect").show();
+			getSchemes();
+		}
+		else if(selectedVal === "hero"){
+			emptyDropdown();
+			$(".jsNextFilterSelect").show();
+			getHeroes();
 		}
 	});
 }
@@ -38,7 +144,7 @@ function getHighScoresError(err){
 }
 
 function getHighScoresSuccess(data){
-	console.log(data);
+	//console.log(data);
 	let totalScoreString;
 	for(let i = 0;i < data.highScores.length;i++){
 		totalScoreString = createScoreString(data.highScores[i],i);
@@ -97,6 +203,7 @@ function getAuth(){
 }
 
 function initializePage(){	
+	$(".jsNextFilterSelect").hide();
 	getAuth();
 	getHighScores();
 	checkDropdown();
