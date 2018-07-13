@@ -5,10 +5,9 @@ const passport = require('passport');
 const {User} = require('../models/userData');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const { publicKey,privateKey } = require('../config');
 
 const jsonParser = bodyParser.json();
-
-
 
 router.post('/',jsonParser,(req,res) => {
 	//check for illegal characters
@@ -354,6 +353,16 @@ router.get("/stats",jwtAuth,(req,res) =>{
 		
 		return res.json({"err":err});
 	});
+});
+
+router.get("/key",jwtAuth,(req,res) =>{
+	
+
+	return res.json({
+			publickey:publicKey,
+			privatekey: privateKey
+		});
+
 });
 
 module.exports = {router};
