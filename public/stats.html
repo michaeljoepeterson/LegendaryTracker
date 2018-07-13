@@ -49,6 +49,17 @@
 				<option value="total">Total Score</option>
 				<option value="ppt">Points Per Turn</option>
 			</select>
+		<label class="scoreLabel" for="filterSelect">Filter by </label>
+			<select class="jsFilterSelect" id="filterSelect">
+				<option value="none">None</option>
+				<option value="mastermind">Mastermind</option>
+				<option value="scheme">Scheme</option>
+				<option value="hero">Hero</option>
+			</select>
+			<label class="scoreLabel jsNextFilterLabel" for="nextFilterSelect"></label>
+			<select class="jsNextFilterSelect" id="nextFilterSelect">
+				<option value="none">None</option>
+			</select>
 		</form>
 	<main role="main">
 		<div class="table-responsive scoreTableTotal">
@@ -89,6 +100,44 @@
 				</tr>
 			</table>
 		</div>
+		<div class="table-responsive filterTable">
+			<table class="table jsFilterTable">
+				<tr>
+					<th>Score</th>
+					<th>Win</th>
+					<th>Heroes</th>
+					<th>Mastermind</th>
+					<th>Scheme</th>
+					<th>Villain Group</th>
+					<th>Henchmen Goup</th>
+					<th>Bystanders Lost</th>
+					<th>Number of Schemes</th>
+					<th>Number of Turns</th>
+					<th>Number of Escaped Villains</th>						
+					<th>Points Per Turn</th>
+					<th>Total Score</th>
+				</tr>
+			</table>
+		</div>
+		<div class="table-responsive filterTableppt">
+			<table class="table scoreTable jsFilterTableppt">
+				<tr>
+					<th>Score</th>
+					<th>Win</th>
+					<th>Heroes</th>
+					<th>Mastermind</th>
+					<th>Scheme</th>
+					<th>Villain Group</th>
+					<th>Henchmen Goup</th>
+					<th>Bystanders Lost</th>
+					<th>Number of Schemes</th>
+					<th>Number of Turns</th>
+					<th>Number of Escaped Villains</th>						
+					<th>Points Per Turn</th>
+					<th>Total Score</th>
+				</tr>
+			</table>
+		</div>		
 	</main>
 </body>
 </html>
