@@ -1,5 +1,31 @@
+let filterChoice = "none";
+let filterBy = "none";
+
+function clearTables(){
+	const headerString = `<tr>
+					<th>Score</th>
+					<th>Heroes</th>
+					<th>Mastermind</th>
+					<th>Scheme</th>
+					<th>Villain Group</th>
+					<th>Henchmen Goup</th>
+					<th>Bystanders Lost</th>
+					<th>Number of Schemes</th>
+					<th>Number of Turns</th>
+					<th>Number of Escaped Villains</th>						
+					<th>Points Per Turn</th>
+					<th>Total Score</th>
+				</tr>`
+	$(".jsFilterTable").empty();
+	$(".jsFilterTableppt").empty();
+	$(".jsFilterTable").append(headerString);
+	$(".jsFilterTableppt").append(headerString);
+}
+
 function emptyDropdown(){
+	const noneString = `<option value="none">None</option>`
 	$(".jsNextFilterSelect").empty();
+	$(".jsNextFilterSelect").append(noneString);
 }
 
 function organizeDropdown(arr){
@@ -85,37 +111,71 @@ function checkDropdown(){
 		let selectedVal = $(this).find(':selected').val();
 		//console.log(selectedVal);
 		let filterType = $(".jsFilterSelect").val(); 
-		if (selectedVal === "total" && filterType === "none"){
+		if (selectedVal === "total" && (filterType === "none" || filterBy === "none")){
 			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
 		}
-		else if(selectedVal === "ppt" && filterType === "none"){
+		else if(selectedVal === "ppt" && (filterType === "none" || filterBy === "none")){
 			$(".scoreTableTotal").css("display","none");
 			$(".scoreTableppt").css("display","inherit");
+		}
+		else if(selectedVal === "total"){
+			$(".filterTable").css("display","inherit");
+			$(".filterTableppt").css("display","none");
+		}
+		else if(selectedVal === "ppt"){
+			$(".filterTable").css("display","none");
+			$(".filterTableppt").css("display","inherit");
 		}
 	});
 	$(".jsFilterSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
 		console.log(selectedVal);
 		if(selectedVal === "none"){
+			filterChoice = "none"
 			emptyDropdown();
 			$(".jsNextFilterSelect").hide();
+			$(".scoreTableTotal").css("display","inherit");
+			$(".scoreTableppt").css("display","none");
+			$(".filterTable").css("display","none");
+			$(".filterTableppt").css("display","none");
 		}
 		else if(selectedVal === "mastermind"){
+			filterChoice = "mastermind"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
 			getMasterminds();
 		}
 		else if(selectedVal === "scheme"){
+			filterChoice = "scheme"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
 			getSchemes();
 		}
 		else if(selectedVal === "hero"){
+			filterChoice = "hero"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
 			getHeroes();
 		}
+	});
+	$(".jsNextFilterSelect").change(function(){
+		let selectedVal = $(this).find(':selected').val();
+		filterBy = selectedVal;
+		console.log(selectedVal);
+		if (selectedVal === "none"){
+			$(".scoreTableTotal").css("display","inherit");
+			$(".scoreTableppt").css("display","none");
+			$(".filterTable").css("display","none");
+			$(".filterTableppt").css("display","none");
+		}else{
+			getHighScores();
+			$(".scoreTableTotal").css("display","none");
+			$(".scoreTableppt").css("display","none");
+			$(".filterTable").css("display","inherit");
+			$(".filterTableppt").css("display","none");
+		}
+		
 	});
 }
 
@@ -144,18 +204,56 @@ function getHighScoresError(err){
 }
 
 function getHighScoresSuccess(data){
-	//console.log(data);
+	console.log(data);
 	let totalScoreString;
-	for(let i = 0;i < data.highScores.length;i++){
-		totalScoreString = createScoreString(data.highScores[i],i);
-		$(".jsTableTotalScore").append(totalScoreString);
-	}
 	let pptString;
-	for(let i = 0;i < data.highScores.length;i++){
-		pptString = createScoreString(data.highScoresPpt[i],i);
-		$(".jsTablePpt").append(pptString);
+	clearTables();
+	if(filterChoice === "none" || filterBy === "none"){
+		for(let i = 0;i < data.highScores.length;i++){
+			totalScoreString = createScoreString(data.highScores[i],i);
+			$(".jsTableTotalScore").append(totalScoreString);
+		}
+		
+		for(let i = 0;i < data.highScoresPpt.length;i++){
+			pptString = createScoreString(data.highScoresPpt[i],i);
+			$(".jsTablePpt").append(pptString);
+		}
 	}
-
+	else if(filterChoice === "hero"){
+		for(let i = 0;i < data.highScores.length;i++){
+			if(data.highScores[i].hero1 === filterBy || data.highScores[i].hero2 === filterBy || data.highScores[i].hero3 === filterBy){
+				totalScoreString = createScoreString(data.highScores[i],i);
+				$(".jsFilterTable").append(totalScoreString);
+			}
+			
+		}
+		
+		for(let i = 0;i < data.highScoresPpt.length;i++){
+			if(data.highScoresPpt[i].hero1 === filterBy || data.highScoresPpt[i].hero2 === filterBy || data.highScoresPpt[i].hero3 === filterBy){
+				pptString = createScoreString(data.highScoresPpt[i],i);
+			$(".jsFilterTableppt").append(pptString);
+			}
+			
+		}
+	}
+	else{
+		for(let i = 0;i < data.highScores.length;i++){
+			if(data.highScores[i][filterChoice] ===filterBy){
+				totalScoreString = createScoreString(data.highScores[i],i);
+				$(".jsFilterTable").append(totalScoreString);
+			}
+			
+		}
+		
+		for(let i = 0;i < data.highScoresPpt.length;i++){
+			if(data.highScoresPpt[i][filterChoice] ===filterBy){
+				pptString = createScoreString(data.highScoresPpt[i],i);
+			$(".jsFilterTableppt").append(pptString);
+			}
+			
+		}
+	}
+	
 }
 
 function getHighScores(){
