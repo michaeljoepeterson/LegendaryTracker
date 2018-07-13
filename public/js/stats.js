@@ -71,7 +71,7 @@ function getUserInfo(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/stats",
+		url: "/api/users/characterimg",
 		data:user,
 		success: getUserInfoSuccess,
 		error: getUserInfoError,
