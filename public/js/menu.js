@@ -51,74 +51,6 @@ function createDataString(data){
 	return newString;
 }
 
-function getCharacterSuccess(data){
-	console.log(data);
-	if (data.data.results.length === 0){
-		console.log("no data");
-		imgUrl = "images/cardback.jpg";
-	}
-	else{
-		let finalImgUrl = data.data.results[0].thumbnail.path + "/portrait_xlarge" + "." + data.data.results[0].thumbnail.extension;
-		console.log(finalImgUrl);
-		imgUrl = finalImgUrl;
-		if(choice === 1){
-			$(".jsImage1").attr("src",imgUrl);
-		}
-		else if(choice === 2){
-			$(".jsImage2").attr("src",imgUrl);
-		}
-		else if(choice === 3){
-			$(".jsImage3").attr("src",imgUrl);
-		}
-	}
-	
-}
-
-function getCharacterError(err){
-	console.log(err);
-}
-
-function getKeySuccess(data){
-	let endUrl = "http://gateway.marvel.com/v1/public/characters";
-	let d = new Date();
-	let timeStamp = d.getTime();
-	timeStamp = timeStamp.toString();
-	let m5Hash = MD5(timeStamp + data.privatekey+data.publickey);
-	const settings = {
-		method: "GET",
-		url: endUrl,
-		data:{
-			"apikey":data.publickey,
-			"ts": timeStamp,
-			"hash":m5Hash,
-			name:heroChoice1
-		},
-		success: getCharacterSuccess,
-		error: getCharacterError
-	};
-	$.ajax(settings);
-}
-
-function getKeyError(err){
-	console.log(err);
-	if(err.responseText === "Unauthorized"){
-		window.location.href = "/index.html";
-	}
-}
-
-function getKey(){
-	const settings = {
-		method: "GET",
-		headers:{ 
-			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
-		},
-		url: "/api/users/key",
-		success: getKeySuccess,
-		error: getKeyError
-	};
-	$.ajax(settings);
-}
-
 function getCharServerSuccess(data){
 	console.log(data);
 	if (data.error === "No results"){
@@ -185,7 +117,7 @@ function checkDropdowns(){
 		console.log(selectedVal);
 		heroChoice1 = selectedVal;
 		choice = 1;
-		getKey();
+		getCharServer();
 		
 	});
 	$(".jsHeroSelect2").change(function(){
@@ -194,7 +126,7 @@ function checkDropdowns(){
 		//console.log(MD5("1abcd1234"))
 		heroChoice1 = selectedVal;
 		choice = 2;
-		getKey();
+		getCharServer();
 		
 	});
 	$(".jsHeroSelect3").change(function(){
