@@ -23,18 +23,22 @@ function clearTables(){
 	$(".jsFilterTableppt").append(headerString);
 }
 
-function emptyDropdown(){
+function emptyDropdown(choice){
 	const noneString = `<option value="none">None</option>`
-	$(".jsNextFilterSelect").empty();
-	$("#mastermindSelectModal").empty();
-	$("#hero1SelectModal").empty();
-	$("#hero2SelectModal").empty();
-	$("#hero3SelectModal").empty();
-	$(".jsNextFilterSelect").append(noneString);
-	$("#mastermindSelectModal").append(noneString);
-	$("#hero1SelectModal").append(noneString);
-	$("#hero2SelectModal").append(noneString);
-	$("#hero3SelectModal").append(noneString);
+	if (choice === 1){
+		$(".jsNextFilterSelect").empty();
+	}
+	else if (choice === 2){
+		$("#mastermindSelectModal").empty();
+		$("#hero1SelectModal").empty();
+		$("#hero2SelectModal").empty();
+		$("#hero3SelectModal").empty();
+		$(".jsNextFilterSelect").append(noneString);
+		$("#mastermindSelectModal").append(noneString);
+		$("#hero1SelectModal").append(noneString);
+		$("#hero2SelectModal").append(noneString);
+		$("#hero3SelectModal").append(noneString);
+	}	
 }
 
 function organizeDropdown(arr){
@@ -80,7 +84,7 @@ function populateModal(data){
 	}else{
 		let idString = "#" + data.data[0].classification + "SelectModal";
 		options = createDataString(data);
-		console.log(idString);
+		//console.log(idString);
 		$(idString).append(options);
 		$(idString).val(rowData[data.data[0].classification]);
 	}
@@ -195,7 +199,7 @@ function checkDropdown(){
 		console.log(selectedVal);
 		if(selectedVal === "none"){
 			filterChoice = "none"
-			emptyDropdown();
+			emptyDropdown(1);
 			$(".jsNextFilterSelect").hide();
 			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
@@ -204,19 +208,19 @@ function checkDropdown(){
 		}
 		else if(selectedVal === "mastermind"){
 			filterChoice = "mastermind"
-			emptyDropdown();
+			emptyDropdown(1);
 			$(".jsNextFilterSelect").show();
 			getMasterminds(populateData);
 		}
 		else if(selectedVal === "scheme"){
 			filterChoice = "scheme"
-			emptyDropdown();
+			emptyDropdown(1);
 			$(".jsNextFilterSelect").show();
 			getSchemes(populateData);
 		}
 		else if(selectedVal === "hero"){
 			filterChoice = "hero"
-			emptyDropdown();
+			emptyDropdown(1);
 			$(".jsNextFilterSelect").show();
 			getHeroes(populateData);
 		}
@@ -342,7 +346,7 @@ function generateModal(){
 
 function tableClicked(){
 	$("table").on("click", ".rowClick", function(event){
-		emptyDropdown();
+		emptyDropdown(2);
 		event.stopImmediatePropagation();
 		let scoreId = $(this).children("#scoreId").text();	
 		rowData.scoreId = scoreId;
@@ -359,8 +363,17 @@ function tableClicked(){
 		rowData.henchman = henchmen;
 		let heroesText = $(this).children("#hero").text();
 		let heroes = heroesText.split(",");
-		//console.log(heroes);
 		rowData.heroes = heroes;
+		let numBystanders = $(this).children("#numBystanders").text();
+		rowData.numBystanders = numBystanders;
+		let numSchemes = $(this).children("#numSchemes").text();
+		rowData.numSchemes = numSchemes;
+		let numTurns = $(this).children("#numTurns").text();
+		rowData.numTurns = numTurns;
+		let numVillains = $(this).children("#numVillains").text();
+		rowData.numVillains = numVillains;
+		let victoryPoints = $(this).children("#victoryPoints").text();
+		rowData.victoryPoints = victoryPoints;
 		generateModal();
 		if(win === "Yes"){
 			win = "y";
@@ -371,7 +384,12 @@ function tableClicked(){
 		
 		$('#myModal').modal('show');
 		$("#winSelectModal").val(win);
-		
+		$("#bystanderInputModal").val(numBystanders);
+		$("#schemesInputModal").val(numSchemes);
+		$("#turnInputModal").val(numTurns);
+		$("#escapedVilliansInputModal").val(numVillains);
+		$("#victoryPointInputModal").val(victoryPoints);
+		console.log(rowData);
 
 	});
 }
