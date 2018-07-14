@@ -1,6 +1,6 @@
 let filterChoice = "none";
 let filterBy = "none";
-
+let rowData = []
 function clearTables(){
 	const headerString = `<tr>
 					<th>Score</th>
@@ -54,6 +54,8 @@ function createDataString(data){
 function populateData(data){
 	options = createDataString(data);
 	$(".jsNextFilterSelect").append(options);
+	$("#mastermindSelectModal").append(options);
+	$("#mastermindSelectModal").val(rowData[0]);
 }
 
 function getSchemes(){
@@ -189,11 +191,11 @@ function createScoreString(score,index){
 	else{
 		winText = "No"
 	}
-	let returnString = `<tr>
+	let returnString = `<tr class="rowClick">
 				<td>${scoreNum}</td>
-				<td>${winText}</td>
+				<td id="winText">${winText}</td>
 				<td>${score.hero1},${score.hero2},${score.hero3}</td>
-				<td>${score.mastermind}</td>
+				<td id="mastermind">${score.mastermind}</td>
 				<td>${score.scheme}</td>
 				<td>${score.villain}</td>
 				<td>${score.henchmen}</td>
@@ -269,6 +271,28 @@ function getUserInfoSuccess(data){
 	}
 }
 
+function tableClicked(){
+	$("table").on("click", ".rowClick", function(){
+		
+		let win = $(this).children("#winText").text();	
+		let mastermind = $(this).children("#mastermind").text();
+		rowData.push(mastermind);
+		getMasterminds();
+		if(win === "Yes"){
+			win = "y";
+		}
+		else{
+			win = "n"
+		}
+		console.log(win);
+		console.log(mastermind);
+		$('#myModal').modal('show');
+		$("#winSelectModal").val(win);
+		
+
+	});
+}
+
 function getUserInfo(){
 	const user = {username:sessionStorage.getItem("user")};
 	const settings = {
@@ -317,6 +341,7 @@ function initializePage(){
 	getAuth();
 	getUserInfo();
 	checkDropdown();
+	tableClicked();
 }
 
 $(initializePage);
