@@ -1,6 +1,6 @@
 let filterChoice = "none";
 let filterBy = "none";
-let rowData = []
+let rowData = {};
 function clearTables(){
 	const headerString = `<tr>
 					<th>Score</th>
@@ -26,7 +26,15 @@ function clearTables(){
 function emptyDropdown(){
 	const noneString = `<option value="none">None</option>`
 	$(".jsNextFilterSelect").empty();
+	$("#mastermindSelectModal").empty();
+	$("#hero1SelectModal").empty();
+	$("#hero2SelectModal").empty();
+	$("#hero3SelectModal").empty();
 	$(".jsNextFilterSelect").append(noneString);
+	$("#mastermindSelectModal").append(noneString);
+	$("#hero1SelectModal").append(noneString);
+	$("#hero2SelectModal").append(noneString);
+	$("#hero3SelectModal").append(noneString);
 }
 
 function organizeDropdown(arr){
@@ -52,13 +60,34 @@ function createDataString(data){
 }
 
 function populateData(data){
+	console.log(data);
 	options = createDataString(data);
 	$(".jsNextFilterSelect").append(options);
-	$("#mastermindSelectModal").append(options);
-	$("#mastermindSelectModal").val(rowData[0]);
+	//$("#mastermindSelectModal").append(options);
+	//$("#mastermindSelectModal").val(rowData.mastermind);
 }
 
-function getSchemes(){
+function populateModal(data){
+	if (data.data[0].classification === "hero"){
+		options = createDataString(data);
+		$("#hero1SelectModal").append(options);
+		$("#hero2SelectModal").append(options);
+		$("#hero3SelectModal").append(options);
+		$("#hero1SelectModal").val(rowData.heroes[0]);
+		$("#hero2SelectModal").val(rowData.heroes[1]);
+		$("#hero3SelectModal").val(rowData.heroes[2]);
+
+	}else{
+		let idString = "#" + data.data[0].classification + "SelectModal";
+		options = createDataString(data);
+		console.log(idString);
+		$(idString).append(options);
+		$(idString).val(rowData[data.data[0].classification]);
+	}
+	
+}
+
+function getSchemes(callback){
 	//html href
 	//console.log("get")
 	const settings = {
@@ -67,7 +96,7 @@ function getSchemes(){
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
 		url: "/protected/scheme",
-		success: populateData,
+		success: callback,
 		error: function(err){
 			console.log(err);
 		}
@@ -75,7 +104,7 @@ function getSchemes(){
 	$.ajax(settings);	
 }
 
-function getMasterminds(){
+function getMasterminds(callback){
 	//html href
 	//console.log("get")
 	const settings = {
@@ -84,7 +113,7 @@ function getMasterminds(){
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
 		url: "/protected/masterminds",
-		success: populateData,
+		success: callback,
 		error: function(err){
 			console.log(err);
 		}
@@ -92,7 +121,7 @@ function getMasterminds(){
 	$.ajax(settings);	
 }
 
-function getHeroes(){
+function getHeroes(callback){
 	//html href
 	//console.log("get")
 	const settings = {
@@ -101,7 +130,37 @@ function getHeroes(){
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
 		url: "/protected/heroes",
-		success: populateData,
+		success: callback,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function getHenchmen(callback){
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/henchmen",
+		success: callback,
+		error: function(err){
+			console.log(err);
+		}
+	};
+	$.ajax(settings);	
+}
+
+function getVillains(callback){
+	const settings = {
+		method: "GET",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/protected/villains",
+		success: callback,
 		error: function(err){
 			console.log(err);
 		}
@@ -147,19 +206,19 @@ function checkDropdown(){
 			filterChoice = "mastermind"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
-			getMasterminds();
+			getMasterminds(populateData);
 		}
 		else if(selectedVal === "scheme"){
 			filterChoice = "scheme"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
-			getSchemes();
+			getSchemes(populateData);
 		}
 		else if(selectedVal === "hero"){
 			filterChoice = "hero"
 			emptyDropdown();
 			$(".jsNextFilterSelect").show();
-			getHeroes();
+			getHeroes(populateData);
 		}
 	});
 	$(".jsNextFilterSelect").change(function(){
@@ -192,19 +251,20 @@ function createScoreString(score,index){
 		winText = "No"
 	}
 	let returnString = `<tr class="rowClick">
-				<td>${scoreNum}</td>
+				<td id="scoreId">${scoreNum}</td>
 				<td id="winText">${winText}</td>
-				<td>${score.hero1},${score.hero2},${score.hero3}</td>
+				<td id="hero">${score.hero1},${score.hero2},${score.hero3}</td>
 				<td id="mastermind">${score.mastermind}</td>
-				<td>${score.scheme}</td>
-				<td>${score.villain}</td>
-				<td>${score.henchmen}</td>
-				<td>${score.numBystanders}</td>
-				<td>${score.numSchemes}</td>
-				<td>${score.numTurns}</td>
-				<td>${score.numVillains}</td>
+				<td id="scheme">${score.scheme}</td>
+				<td id="villain">${score.villain}</td>
+				<td id="henchmen">${score.henchmen}</td>
+				<td id="numBystanders">${score.numBystanders}</td>
+				<td id="numSchemes">${score.numSchemes}</td>
+				<td id="numTurns" >${score.numTurns}</td>
+				<td id="numVillains">${score.numVillains}</td>
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
+				<td class="noDisplay" id="victoryPoints">${score.victoryPoints}</td>
 			</tr>`
 	return returnString;
 }
@@ -269,23 +329,46 @@ function getUserInfoSuccess(data){
 			
 		}
 	}
+	$(".noDisplay").hide();
+}
+
+function generateModal(){
+	getMasterminds(populateModal);
+	getHeroes(populateModal);
+	getSchemes(populateModal);
+	getVillains(populateModal);
+	getHenchmen(populateModal);
 }
 
 function tableClicked(){
-	$("table").on("click", ".rowClick", function(){
-		
+	$("table").on("click", ".rowClick", function(event){
+		emptyDropdown();
+		event.stopImmediatePropagation();
+		let scoreId = $(this).children("#scoreId").text();	
+		rowData.scoreId = scoreId;
+		$(".jsModalHeader").text("Score ID " + scoreId);
 		let win = $(this).children("#winText").text();	
+		rowData.win = win;
 		let mastermind = $(this).children("#mastermind").text();
-		rowData.push(mastermind);
-		getMasterminds();
+		rowData.mastermind = mastermind;
+		let scheme = $(this).children("#scheme").text();
+		rowData.scheme = scheme;
+		let villain = $(this).children("#villain").text();
+		rowData.villian = villain;
+		let henchmen = $(this).children("#henchmen").text();
+		rowData.henchman = henchmen;
+		let heroesText = $(this).children("#hero").text();
+		let heroes = heroesText.split(",");
+		//console.log(heroes);
+		rowData.heroes = heroes;
+		generateModal();
 		if(win === "Yes"){
 			win = "y";
 		}
 		else{
 			win = "n"
 		}
-		console.log(win);
-		console.log(mastermind);
+		
 		$('#myModal').modal('show');
 		$("#winSelectModal").val(win);
 		
