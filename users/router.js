@@ -187,7 +187,7 @@ function compareScores(scoreArray,highScoreArray,filterType){
 router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	//res.json({message:"success"});
 	let {username,score} =  req.body;
-
+	
 	for (let key in req.body){
 		if(key === "username" || key === "score"){
 			continue;
@@ -221,9 +221,9 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 	return User.find({"username":username})
 
 	.then(user => {
-		let data = user[0].scores;
-		let totalHighScore = user[0].highScores;
-		let pptHighScore = user[0].highScoresPpt;
+		let data = user[0].scores.slice();
+		let totalHighScore = user[0].highScores.slice();
+		let pptHighScore = user[0].highScoresPpt.slice();
 		let newTotalHighScore;
 		let newPptHighScore;
 		//console.log(data.length);
@@ -250,7 +250,7 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 		}
 		score.id = maxId + 1;
 		data.push(score);
-		console.log(score);
+		//console.log(score);
 		return User.findOneAndUpdate({"username":username}, {$set:{scores:data,highScores:newTotalHighScore,highScoresPpt:newPptHighScore}, $inc:{wins:winCount,matches:1}})
 	})
 
@@ -371,8 +371,22 @@ router.get("/characterimg",jwtAuth,(req,res) =>{
 	let m5Hash = MD5(timeStamp + privateKey+publicKey);
 	let character = req.query.character;
 	let endUrl = "http://gateway.marvel.com/v1/public/characters?ts=" + timeStamp + "&apikey=" + publicKey + "&hash=" + m5Hash + "&name=" + character; 
+
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+
+	const checkChars = legalChars.test(timeStamp);
+	const checkChars2 = legalChars.test(character); 
+	
+	if (!checkChars || !checkChars2){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
+	}
 	request(endUrl,function(err,response,body){
-		console.log('error:', err);
+		//console.log('error:', err);
         //console.log('statusCode:', response); 
         //console.log(body);
         let parsed = JSON.parse(body);
@@ -391,6 +405,122 @@ router.get("/characterimg",jwtAuth,(req,res) =>{
         
 	});
 
+});
+
+function findById(numId, objectArr){
+	
+	//console.log(objectArr.length);
+	let newArr = objectArr.slice();
+	let returnValues = {};
+	let winVal = 0;
+	for(let i = 0;i < newArr.length;i++){
+		
+		if(newArr[i].id == numId){
+			//console.log("found id");
+			if(newArr[i].win === "y"){
+				
+				winVal++;
+			}
+			
+			returnValues.win = winVal;
+			
+			newArr.splice(i,1);
+		}
+		
+	}
+	
+	returnValues.newArray = newArr;
+	return returnValues;
+}
+
+function updateHighScoresArrays(arr,arrHighScore,scoreType){
+	console.log("update highscores ftn");
+	let returnHighScores = arrHighScore.slice();
+	console.log(returnHighScores.length);
+	for(let i = 0; i < arr.length;i++){
+		for(let k =0; k< arrHighScore.length;k++){
+			console.log(i,k);
+			if(arr[i][scoreType] >= arrHighScore[k][scoreType] && arr[i].id !== arrHighScore[k].id && returnHighScores.length !== 10){
+				console.log("found item");
+				console.log(arr[i]);
+				returnHighScores.push(arr[i]);
+				console.log(returnHighScores.length);
+			}
+		}
+		if(returnHighScores.length === 10){
+			break;
+		}
+	}
+	returnHighScores = organizeScores(returnHighScores,scoreType);
+	console.log(returnHighScores.length);
+	return returnHighScores;
+}
+
+router.delete("/deletescore", jwtAuth, jsonParser, (req,res)=> {
+	//let userName =  req.query.user;
+	//let scoreId = req.query.scoreId;
+	let {username,scoreId} =  req.body;
+	let returnScores;
+	let returnScoresPpt;
+	let returnWins;
+	let returnMatches;
+	//console.log(username,scoreId);
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+
+	const checkChars = legalChars.test(username);
+	const checkChars2 = legalChars.test(scoreId); 
+	
+	if (!checkChars || !checkChars2){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
+	}
+	return User.find({"username":username})
+
+	.then(user => {
+		//console.log(user[0].scores);
+		let oldScores = user[0].scores.slice();
+		let oldHighScores = user[0].highScores.slice();
+		let oldHighScoresPpt = user[0].highScoresPpt.slice();
+		//console.log("finding by id function");
+		let newScores = findById(scoreId,oldScores);
+		let newHighScore = findById(scoreId,oldHighScores);
+		let newHighScorePpt = findById(scoreId,oldHighScoresPpt);
+		let updateHighScore = newHighScore.newArray.slice();
+		let updateHighScorePpt = newHighScorePpt.newArray.slice();
+		
+		//totals
+		let userTotal = newScores.newArray.slice();
+		let userPpt = newScores.newArray.slice();
+		let newTotalHighScore = organizeScores(userTotal,"totalScore");
+		let newPptHighScore = organizeScores(userPpt,"pointsPerTurn");
+		returnScores = newTotalHighScore;
+		returnScoresPpt = newPptHighScore;
+		returnMatches = user[0].matches - 1;
+		returnWins = user[0].wins - newScores.win;
+		console.log("calling update ftn");
+		let finalHighScores = updateHighScoresArrays(userTotal, updateHighScore,"totalScore");
+		let finalHighScoresppt = updateHighScoresArrays(userPpt, updateHighScorePpt,"pointsPerTurn");
+		console.log("update db");
+		return User.findOneAndUpdate({"username":username}, {$set:{scores:newScores.newArray,highScores:finalHighScores,highScoresPpt:finalHighScoresppt, wins:returnWins,matches:returnMatches}})
+	})
+	.then(user =>{
+
+		return res.json({
+			scoresTotal:returnScores,
+			scoresPpt:returnScoresPpt,
+			wins:returnWins,
+			matches:returnMatches
+		});
+	})
+		
+	.catch(err => {
+		
+		return res.json({"err":err});
+	});
 });
 
 module.exports = {router};

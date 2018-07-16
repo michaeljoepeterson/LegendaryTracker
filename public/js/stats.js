@@ -1,6 +1,27 @@
 let filterChoice = "none";
 let filterBy = "none";
 let rowData = {};
+function clearTableLoad(){
+	const headerString = `<tr>
+					<th>Score</th>
+					<th>Win</th>
+					<th>Heroes</th>
+					<th>Mastermind</th>
+					<th>Scheme</th>
+					<th>Villain Group</th>
+					<th>Henchmen Goup</th>
+					<th>Bystanders Lost</th>
+					<th>Number of Schemes</th>
+					<th>Number of Turns</th>
+					<th>Number of Escaped Villains</th>						
+					<th>Points Per Turn</th>
+					<th>Total Score</th>
+				</tr>`;
+	$(".jsTableTotalScore").empty();
+	$(".jsTablePpt").empty();
+	$(".jsTableTotalScore").append(headerString);
+	$(".jsTablePpt").append(headerString);
+}
 function clearTables(){
 	const headerString = `<tr>
 					<th>Score</th>
@@ -16,7 +37,7 @@ function clearTables(){
 					<th>Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
-				</tr>`
+				</tr>`;
 	$(".jsFilterTable").empty();
 	$(".jsFilterTableppt").empty();
 	$(".jsFilterTable").append(headerString);
@@ -67,8 +88,6 @@ function populateData(data){
 	console.log(data);
 	options = createDataString(data);
 	$(".jsNextFilterSelect").append(options);
-	//$("#mastermindSelectModal").append(options);
-	//$("#mastermindSelectModal").val(rowData.mastermind);
 }
 
 function populateModal(data){
@@ -109,8 +128,6 @@ function getSchemes(callback){
 }
 
 function getMasterminds(callback){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -126,8 +143,6 @@ function getMasterminds(callback){
 }
 
 function getHeroes(callback){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -269,6 +284,7 @@ function createScoreString(score,index){
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
 				<td class="noDisplay" id="victoryPoints">${score.victoryPoints}</td>
+				<td class="noDisplay" id="scoreIdDb">${score.id}</td>
 			</tr>`
 	return returnString;
 }
@@ -295,6 +311,8 @@ function getUserInfoSuccess(data){
 		}
 		
 		for(let i = 0;i < data.scoresPpt.length;i++){
+			
+			//scoreIds.push(data.scoresPpt[i].id);
 			pptString = createScoreString(data.scoresPpt[i],i);
 			$(".jsTablePpt").append(pptString);
 		}
@@ -334,6 +352,7 @@ function getUserInfoSuccess(data){
 		}
 	}
 	$(".noDisplay").hide();
+	
 }
 
 function generateModal(){
@@ -348,8 +367,10 @@ function tableClicked(){
 	$("table").on("click", ".rowClick", function(event){
 		emptyDropdown(2);
 		event.stopImmediatePropagation();
-		let scoreId = $(this).children("#scoreId").text();	
-		rowData.scoreId = scoreId;
+		let scoreId = $(this).children("#scoreId").text();
+		let scoreIdDb = $(this).children("#scoreIdDb").text();
+		rowData.scoreId = scoreIdDb;
+		//console.log(rowData.scoreId);
 		$(".jsModalHeader").text("Score ID " + scoreId);
 		let win = $(this).children("#winText").text();	
 		rowData.win = win;
@@ -390,11 +411,13 @@ function tableClicked(){
 		$("#escapedVilliansInputModal").val(numVillains);
 		$("#victoryPointInputModal").val(victoryPoints);
 		console.log(rowData);
+		
 
 	});
 }
 
 function getUserInfo(){
+
 	const user = {username:sessionStorage.getItem("user")};
 	const settings = {
 		method: "GET",
@@ -410,21 +433,62 @@ function getUserInfo(){
 	$.ajax(settings);
 }
 
+function deleteSuccess(data){
+	console.log(data);
+	/*
+	clearTableLoad();
+	getUserInfo();
+	$(".scoreTableTotal").css("display","inherit");
+			$(".scoreTableppt").css("display","none");
+			$(".filterTable").css("display","none");
+			$(".filterTableppt").css("display","none");
+		*/
+	location.reload();
+}
+
+function deleteError(err){
+	console.log(err);
+}
+
+function deleteRequest(){
+	console.log(sessionStorage.getItem("user"));
+	let userData = {
+		username: sessionStorage.getItem("user"),
+		scoreId: rowData.scoreId
+	};
+	const settings = {
+		method: "DELETE",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/api/users/deletescore",
+		data: JSON.stringify(userData),
+		success: deleteSuccess,
+		error: deleteError,
+		dataType: 'json',
+		contentType: 'application/json'
+	};
+	$.ajax(settings);
+}
+
+function deleteButtonClicked(){
+	$(".jsDeleteButton").click(function(event){
+		deleteRequest();
+	});
+	//
+}
+
 function getAuthSuccess(data){
-	//console.log(data);
 	$(".jsUserName").text(sessionStorage.getItem("user") + " Logged In");
 	
 }
 
 function getAuthError(err){
 	console.log(err);
-	//alert("Please login");
 	window.location.href = "/index.html";
 }
 
 function getAuth(){	
-	//console.log("Attempt to get page");
-	
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -443,6 +507,7 @@ function initializePage(){
 	getUserInfo();
 	checkDropdown();
 	tableClicked();
+	deleteButtonClicked();
 }
 
 $(initializePage);

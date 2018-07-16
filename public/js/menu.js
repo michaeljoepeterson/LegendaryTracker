@@ -359,7 +359,7 @@ function addScore(){
 
 		};
 
-		const settings = {
+	const settings = {
 		method: "PUT",
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
