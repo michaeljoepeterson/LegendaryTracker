@@ -48,6 +48,7 @@ function emptyDropdown(choice){
 	const noneString = `<option value="none">None</option>`
 	if (choice === 1){
 		$(".jsNextFilterSelect").empty();
+		$(".jsNextFilterSelect").append(noneString);
 	}
 	else if (choice === 2){
 		$("#mastermindSelectModal").empty();
@@ -502,7 +503,8 @@ function getAuth(){
 	
 }
 
-function initializePage(){	
+function initializePage(){
+	$(".jsNextFilterSelect").hide();	
 	getAuth();
 	getUserInfo();
 	checkDropdown();

@@ -372,7 +372,7 @@ router.get("/characterimg",jwtAuth,(req,res) =>{
 	let character = req.query.character;
 	let endUrl = "http://gateway.marvel.com/v1/public/characters?ts=" + timeStamp + "&apikey=" + publicKey + "&hash=" + m5Hash + "&name=" + character; 
 
-	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s-']*$/;
 
 	const checkChars = legalChars.test(timeStamp);
 	const checkChars2 = legalChars.test(character); 
@@ -433,19 +433,41 @@ function findById(numId, objectArr){
 	return returnValues;
 }
 
+function genIdArray(arr){
+	let idArr = [];
+	for (let i = 0;i < arr.length;i++){
+		idArr.push(arr[i].id);
+	}
+	return idArr;
+}
+
 function updateHighScoresArrays(arr,arrHighScore,scoreType){
 	console.log("update highscores ftn");
+	const idArray = genIdArray(arrHighScore);
+	console.log(idArray);
 	let returnHighScores = arrHighScore.slice();
 	console.log(returnHighScores.length);
 	for(let i = 0; i < arr.length;i++){
 		for(let k =0; k< arrHighScore.length;k++){
 			console.log(i,k);
-			if(arr[i][scoreType] >= arrHighScore[k][scoreType] && arr[i].id !== arrHighScore[k].id && returnHighScores.length !== 10){
+			console.log("ids", arr[i].id,arrHighScore[k].id )
+			if(idArray.includes(arr[i].id)){
+				break;
+			}
+			else if(arrHighScore[i].win !== "n"){
+				break;
+			}
+			else if(arr[i][scoreType] >= arrHighScore[k][scoreType] && arr[i].id !== arrHighScore[k].id && returnHighScores.length !== 10){
 				console.log("found item");
 				console.log(arr[i]);
 				returnHighScores.push(arr[i]);
 				console.log(returnHighScores.length);
+				break;
 			}
+			else if(k === (arrHighScore.length - 1) && arrHighScore.length < 10){
+				returnHighScores.push(arr[i]);
+			}
+
 		}
 		if(returnHighScores.length === 10){
 			break;
