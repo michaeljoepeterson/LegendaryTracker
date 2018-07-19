@@ -198,7 +198,7 @@ router.put("/addscore", jwtAuth,jsonParser,(req,res) => {
 		
 	}
 
-	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s']*$/;
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s-']*$/;
 	const checkCharsScore = Object.keys(score).find(key =>{
 		const check = legalChars.test(score[key]);
 		if(!check){
@@ -428,6 +428,7 @@ function findById(numId, objectArr){
 		}
 		
 	}
+	//console.log(newArr);
 	
 	returnValues.newArray = newArr;
 	return returnValues;
@@ -451,12 +452,16 @@ function updateHighScoresArrays(arr,arrHighScore,scoreType){
 		for(let k =0; k< arrHighScore.length;k++){
 			console.log(i,k);
 			console.log("ids", arr[i].id,arrHighScore[k].id )
+			console.log(arr[i][scoreType] >= arrHighScore[k][scoreType] && arr[i].id !== arrHighScore[k].id && returnHighScores.length !== 10);
 			if(idArray.includes(arr[i].id)){
+				console.log("found in id array");
 				break;
 			}
-			else if(arrHighScore[i].win !== "n"){
+			else if(arr[i].win === "n"){
+				console.log("Not a win");
 				break;
 			}
+			
 			else if(arr[i][scoreType] >= arrHighScore[k][scoreType] && arr[i].id !== arrHighScore[k].id && returnHighScores.length !== 10){
 				console.log("found item");
 				console.log(arr[i]);
@@ -465,11 +470,17 @@ function updateHighScoresArrays(arr,arrHighScore,scoreType){
 				break;
 			}
 			else if(k === (arrHighScore.length - 1) && arrHighScore.length < 10){
+				console.log("last item in array");
 				returnHighScores.push(arr[i]);
+			}
+			else{
+				console.log("Just continuing");
+				continue;
 			}
 
 		}
 		if(returnHighScores.length === 10){
+			console.log("stopping for loop");
 			break;
 		}
 	}
