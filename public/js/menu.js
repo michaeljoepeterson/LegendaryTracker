@@ -1,5 +1,3 @@
-//console.log(sessionStorage.getItem("Bearer"));
-//console.log(sessionStorage.getItem("user"));
 
 let expansionObj = {
 	"base":true,
@@ -170,8 +168,6 @@ function populateHeroData(data){
 }
 
 function getHeroes(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -428,10 +424,6 @@ function checkBoxListener(){
 }
 
 function initializeMenu(){
-	//possibly have optional paramters so that can select for expansions
-	//https://developer.marvel.com/
-	//https://comicvine.gamespot.com/api/
-	//possibly export data as csv
 	getAuth();
 	getMasterminds();
 	getHeroes();
@@ -444,4 +436,3 @@ function initializeMenu(){
 }
 
 $(initializeMenu);
-//getMenu();

@@ -493,8 +493,8 @@ router.delete("/deletescore", jwtAuth, jsonParser, (req,res)=> {
 	//let userName =  req.query.user;
 	//let scoreId = req.query.scoreId;
 	let {username,scoreId} =  req.body;
-	let returnScores;
-	let returnScoresPpt;
+	// returnScores;
+	//let returnScoresPpt;
 	let returnWins;
 	let returnMatches;
 	//console.log(username,scoreId);
@@ -530,8 +530,8 @@ router.delete("/deletescore", jwtAuth, jsonParser, (req,res)=> {
 		let userPpt = newScores.newArray.slice();
 		let newTotalHighScore = organizeScores(userTotal,"totalScore");
 		let newPptHighScore = organizeScores(userPpt,"pointsPerTurn");
-		returnScores = newTotalHighScore;
-		returnScoresPpt = newPptHighScore;
+		//returnScores = newTotalHighScore;
+		//returnScoresPpt = newPptHighScore;
 		returnMatches = user[0].matches - 1;
 		returnWins = user[0].wins - newScores.win;
 		console.log("calling update ftn");
@@ -543,10 +543,7 @@ router.delete("/deletescore", jwtAuth, jsonParser, (req,res)=> {
 	.then(user =>{
 
 		return res.json({
-			scoresTotal:returnScores,
-			scoresPpt:returnScoresPpt,
-			wins:returnWins,
-			matches:returnMatches
+			message:"Success"
 		});
 	})
 		
@@ -554,6 +551,108 @@ router.delete("/deletescore", jwtAuth, jsonParser, (req,res)=> {
 		
 		return res.json({"err":err});
 	});
+});
+
+function findIndex(arr, id){
+	let returnId;
+	//console.log(returnId);
+	for(let i = 0; i < arr.length;i++){
+		//console.log(arr[i]);
+		if(arr[i].id == id){
+			returnId = i;
+			return returnId;
+		}
+	}
+	return returnId;
+}
+
+function updateScoreArray(oldArr, newData, index){
+
+	let returnArr = oldArr.slice();
+	console.log("updating score array", returnArr[index]);
+	for(let key in returnArr[index]){
+		console.log(key);
+		if(newData.hasOwnProperty(key) && key !== "id"){
+			console.log("found key");
+			returnArr[index][key] = newData[key];
+			console.log(returnArr[index][key], newData[key]);
+
+		}
+	}
+	//console.log(returnArr[index]);
+	return returnArr;
+}
+
+router.put("/updatescore", jwtAuth, jsonParser, (req,res)=> {
+	//scoreId part of score just id
+	let {username,score} =  req.body;
+	
+	for (let key in req.body){
+		if(key === "username" || key === "score"){
+			continue;
+		}
+		else{
+			return res.json({code:500, message:"an error occured"});
+		}
+		
+	}
+
+	const legalChars = /^[a-zA-z0-9\{\}\<\>\[\]\+\*.,?!;\s-']*$/;
+	const checkCharsScore = Object.keys(score).find(key =>{
+		const check = legalChars.test(score[key]);
+		if(!check){
+			return score[key];
+		}
+	});
+
+	const checkChars = legalChars.test(username);
+	
+	if (!checkChars || checkCharsScore){
+		return res.status(422).json({
+			code:422,
+			reason:"ValidationError",
+			message:"Illegal Character",
+			location: checkChars
+		});
+	}
+
+	return User.find({"username":username})
+
+	.then(user => {
+		let newScores = user[0].scores.slice();
+		let newHighScores = user[0].highScores.slice();
+		let newHighScoresPpt = user[0].highScoresPpt.slice();
+		const scoreIndex = findIndex(newScores,score.id);
+		const highScoreIndex = findIndex(newHighScores,score.id);
+		const highScoreIndexPpt = findIndex(newHighScoresPpt,score.id);
+		console.log("index", scoreIndex,highScoreIndex,highScoreIndexPpt);
+
+		newScores = updateScoreArray(newScores,score,scoreIndex);
+		console.log(score);
+
+		if(highScoreIndex !== undefined){
+			newHighScores = updateScoreArray(newHighScores,score,highScoreIndex);
+		}
+		if(highScoreIndexPpt !== undefined){
+			newHighScoresPpt = updateScoreArray(newHighScoresPpt,score,highScoreIndexPpt);
+		}
+		//console.log(newScores[scoreIndex]);
+		return User.findOneAndUpdate({"username":username}, {$set:{scores:newScores,highScores:newHighScores,highScoresPpt:newHighScoresPpt}})
+
+	})
+
+	.then(user =>{
+
+		return res.json({
+			message:"Success"
+		});
+	})
+		
+	.catch(err => {
+		
+		return res.json({"err":err});
+	});
+
 });
 
 module.exports = {router};

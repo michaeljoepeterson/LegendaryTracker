@@ -284,7 +284,6 @@ function createScoreString(score,index){
 				<td id="numVillains">${score.numVillains}</td>
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
-				<td class="noDisplay" id="victoryPoints">${score.victoryPoints}</td>
 				<td class="noDisplay" id="scoreIdDb">${score.id}</td>
 			</tr>`
 	return returnString;
@@ -371,10 +370,7 @@ function tableClicked(){
 		let scoreId = $(this).children("#scoreId").text();
 		let scoreIdDb = $(this).children("#scoreIdDb").text();
 		rowData.scoreId = scoreIdDb;
-		//console.log(rowData.scoreId);
 		$(".jsModalHeader").text("Score ID " + scoreId);
-		let win = $(this).children("#winText").text();	
-		rowData.win = win;
 		let mastermind = $(this).children("#mastermind").text();
 		rowData.mastermind = mastermind;
 		let scheme = $(this).children("#scheme").text();
@@ -386,6 +382,7 @@ function tableClicked(){
 		let heroesText = $(this).children("#hero").text();
 		let heroes = heroesText.split(",");
 		rowData.heroes = heroes;
+		/*
 		let numBystanders = $(this).children("#numBystanders").text();
 		rowData.numBystanders = numBystanders;
 		let numSchemes = $(this).children("#numSchemes").text();
@@ -396,24 +393,11 @@ function tableClicked(){
 		rowData.numVillains = numVillains;
 		let victoryPoints = $(this).children("#victoryPoints").text();
 		rowData.victoryPoints = victoryPoints;
+		*/
 		generateModal();
-		if(win === "Yes"){
-			win = "y";
-		}
-		else{
-			win = "n"
-		}
-		
 		$('#myModal').modal('show');
-		$("#winSelectModal").val(win);
-		$("#bystanderInputModal").val(numBystanders);
-		$("#schemesInputModal").val(numSchemes);
-		$("#turnInputModal").val(numTurns);
-		$("#escapedVilliansInputModal").val(numVillains);
-		$("#victoryPointInputModal").val(victoryPoints);
 		console.log(rowData);
 		
-
 	});
 }
 
@@ -433,17 +417,19 @@ function getUserInfo(){
 	};
 	$.ajax(settings);
 }
+function updateSuccess(data){
+	console.log(data);
+	alert("Score updated!");
+	location.reload();
+}
+
+function updateError(err){
+	console.log(err);
+}
 
 function deleteSuccess(data){
 	console.log(data);
-	/*
-	clearTableLoad();
-	getUserInfo();
-	$(".scoreTableTotal").css("display","inherit");
-			$(".scoreTableppt").css("display","none");
-			$(".filterTable").css("display","none");
-			$(".filterTableppt").css("display","none");
-		*/
+	alert("Score deleted!");
 	location.reload();
 }
 
@@ -472,11 +458,50 @@ function deleteRequest(){
 	$.ajax(settings);
 }
 
+function updateRequest(){
+	let scoreData = {
+		username:sessionStorage.getItem("user"),
+			score:{
+			mastermind: $("#mastermindSelectModal").val(),
+			scheme: $("#schemeSelectModal").val(),
+			hero1: $("#hero1SelectModal").val(),
+			hero2: $("#hero1SelectModal").val(),
+			hero3: $("#hero1SelectModal").val(),
+			henchmen: $("#henchmanSelectModal").val(),
+			villain: $("#villianSelectModal").val(),
+			id:rowData.scoreId
+		}
+
+	};
+
+	const settings = {
+		method: "PUT",
+		headers:{ 
+			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
+		},
+		url: "/api/users/updatescore",
+		data: JSON.stringify(scoreData),
+		success: updateSuccess,
+		error: updateError,
+		dataType: 'json',
+		contentType: 'application/json'
+	};
+	$.ajax(settings);
+	
+}
+
 function deleteButtonClicked(){
 	$(".jsDeleteButton").click(function(event){
+		//event.stopImmediatePropagation();
 		deleteRequest();
 	});
-	//
+}
+
+function updateButtonClicked(){
+	$(".jsUpdateButton").click(function(event){
+		//event.stopImmediatePropagation();
+		updateRequest();
+	});
 }
 
 function getAuthSuccess(data){
@@ -510,6 +535,7 @@ function initializePage(){
 	checkDropdown();
 	tableClicked();
 	deleteButtonClicked();
+	updateButtonClicked();
 }
 
 $(initializePage);
