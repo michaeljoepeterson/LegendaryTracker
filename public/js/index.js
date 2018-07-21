@@ -127,7 +127,8 @@ function submitClicked(){
 }
 
 function generateSignUpString(){
-	const htmlString = `<label for="verifyInput">Confirm Password:</label>
+	const htmlString = `<div class="labelDiv"><label for="verifyInput">Confirm Password:</label>
+		</div>
 		<input type="Password" id="verifyInput">`;
 	return htmlString;
 }
