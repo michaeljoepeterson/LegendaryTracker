@@ -468,8 +468,8 @@ function updateRequest(){
 			mastermind: $("#mastermindSelectModal").val(),
 			scheme: $("#schemeSelectModal").val(),
 			hero1: $("#hero1SelectModal").val(),
-			hero2: $("#hero1SelectModal").val(),
-			hero3: $("#hero1SelectModal").val(),
+			hero2: $("#hero2SelectModal").val(),
+			hero3: $("#hero3SelectModal").val(),
 			henchmen: $("#henchmanSelectModal").val(),
 			villain: $("#villianSelectModal").val(),
 			id:rowData.scoreId
