@@ -55,6 +55,13 @@ function populateData(data){
 	$(".jsNextFilterSelect").append(options);
 }
 
+function getError(err){
+
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+}
+
 function getSchemes(){
 	//html href
 	//console.log("get")
@@ -65,9 +72,7 @@ function getSchemes(){
 		},
 		url: "/protected/scheme",
 		success: populateData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -82,9 +87,7 @@ function getMasterminds(){
 		},
 		url: "/protected/masterminds",
 		success: populateData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -99,9 +102,7 @@ function getHeroes(){
 		},
 		url: "/protected/heroes",
 		success: populateData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -200,7 +201,9 @@ function createScoreString(score,index){
 
 
 function getHighScoresError(err){
-	console.log(err);
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function getHighScoresSuccess(data){

@@ -111,6 +111,13 @@ function populateModal(data){
 	
 }
 
+function getError(err){
+
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+}
+
 function getSchemes(callback){
 	//html href
 	//console.log("get")
@@ -121,9 +128,7 @@ function getSchemes(callback){
 		},
 		url: "/protected/scheme",
 		success: callback,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -136,9 +141,7 @@ function getMasterminds(callback){
 		},
 		url: "/protected/masterminds",
 		success: callback,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -151,9 +154,7 @@ function getHeroes(callback){
 		},
 		url: "/protected/heroes",
 		success: callback,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -166,9 +167,7 @@ function getHenchmen(callback){
 		},
 		url: "/protected/henchmen",
 		success: callback,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -181,9 +180,7 @@ function getVillains(callback){
 		},
 		url: "/protected/villains",
 		success: callback,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -291,7 +288,9 @@ function createScoreString(score,index){
 
 
 function getUserInfoError(err){
-	console.log(err);
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function getUserInfoSuccess(data){
@@ -424,7 +423,9 @@ function updateSuccess(data){
 }
 
 function updateError(err){
-	console.log(err);
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function deleteSuccess(data){
@@ -434,7 +435,9 @@ function deleteSuccess(data){
 }
 
 function deleteError(err){
-	console.log(err);
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function deleteRequest(){

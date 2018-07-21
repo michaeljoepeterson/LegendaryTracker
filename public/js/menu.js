@@ -5,7 +5,7 @@ let expansionObj = {
 };
 
 let heroChoice1;
-let imgUrl;
+//let imgUrl;
 let choice;
 function resetPage(){
 	const noneString = `<option value="none">None</option>`
@@ -51,7 +51,7 @@ function getCharServerSuccess(data){
 	console.log(data);
 	if (data.error === "No results"){
 		console.log("no data");
-		imgUrl = "images/cardback.jpg";
+		let imgUrl = "https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg";
 		if(choice === 1){
 			$(".jsImage1").attr("src",imgUrl);
 		}
@@ -65,21 +65,24 @@ function getCharServerSuccess(data){
 	else{
 		let finalImgUrl = data.path + "/portrait_xlarge" + "." + data.extension;
 		console.log(finalImgUrl);
-		imgUrl = finalImgUrl;
+		//imgUrl = finalImgUrl;
 		if(choice === 1){
-			$(".jsImage1").attr("src",imgUrl);
+			$(".jsImage1").attr("src",finalImgUrl);
 		}
 		else if(choice === 2){
-			$(".jsImage2").attr("src",imgUrl);
+			$(".jsImage2").attr("src",finalImgUrl);
 		}
 		else if(choice === 3){
-			$(".jsImage3").attr("src",imgUrl);
+			$(".jsImage3").attr("src",finalImgUrl);
 		}
 	}
 }
 
 function getCharServerError(err){
 	console.log(err);
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
 }
 
 function getCharServer(){
@@ -167,6 +170,13 @@ function populateHeroData(data){
 
 }
 
+function getError(err){
+
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+}
+
 function getHeroes(){
 	const settings = {
 		method: "GET",
@@ -175,9 +185,8 @@ function getHeroes(){
 		},
 		url: "/protected/heroes",
 		success: populateHeroData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
+		
 	};
 	$.ajax(settings);	
 }
@@ -199,9 +208,7 @@ function getMasterminds(){
 		},
 		url: "/protected/masterminds",
 		success: populateMastermindData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -223,9 +230,7 @@ function getSchemes(){
 		},
 		url: "/protected/scheme",
 		success: populateSchemeData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -247,9 +252,7 @@ function getHenchmen(){
 		},
 		url: "/protected/henchmen",
 		success: populateHenchmenData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -270,9 +273,7 @@ function getVillains(){
 		},
 		url: "/protected/villains",
 		success: populateVillainData,
-		error: function(err){
-			console.log(err);
-		}
+		error: getError
 	};
 	$.ajax(settings);	
 }
@@ -306,8 +307,9 @@ function getAuth(){
 }
 
 function addedScore(data){
-
-	$(".jsMessage").text("Score Added!");
+	alert("Score Added!");
+	let imgUrl = "https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg";
+	//$(".jsMessage").text("Score Added!");
 	$(".jsWinSelect").val("y");
 	$(".jsTurnInput").val("0");
 	$(".jsEscapedVillains").val("0");	
@@ -321,6 +323,9 @@ function addedScore(data){
 	$(".jsHenchmenSelect").val("none");
 	$(".jsVillainSelect").val("none");
 	$(".jsSchemeSelect").val("none");
+	$(".jsImage1").attr("src",imgUrl);
+	$(".jsImage2").attr("src",imgUrl);
+	$(".jsImage3").attr("src",imgUrl);
 
 }
 
