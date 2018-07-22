@@ -4,11 +4,15 @@
    url('avengeance.ttf') format('truetype'); 
 } 
 
-header,a,button{
+header,button,h2{
 	height: 100%;
 	font: inherit;
 	font-family: "avengeance";
 	font-size: 25px;
+}
+
+header{
+	margin-top: 10px;
 }
 
 body{
@@ -18,6 +22,10 @@ body{
 	background-attachment: fixed;
   /*background-attachment: fixed;*/
   	background-size: cover;
+}
+
+.navBack{
+	background-color: rgb(0,9,85);
 }
 
 .center{
@@ -34,22 +42,11 @@ body{
 	background: linear-gradient(rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.7))
 }
 
-a{
-	margin: 15px;
-	color: rgb(0,0,236);
-}
-button{
-	margin-bottom: 20px;
-	margin-top: 20px;
+.smallSelect{
+	width: 178px;
 }
 
-.labelDiv{
-	font-weight: bold;
-	font-size: 20px;
-}
-
-@media (min-width: 640px){
-	.labelDiv{
-		display: inline;
-	}
+.cardImage{
+	width: 150px;
+	height: 225px;
 }

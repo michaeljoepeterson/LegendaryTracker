@@ -11,10 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/menu.css">
 </head>
 <body>
 	<!--https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-dark navBack">
 		<a class="jsUserName navbar-brand" href="menu.html"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" href="#" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -36,55 +37,85 @@
 			</ul>
 		</div>
 	</nav>
+	<div class="box center">
 	<header role="banner">
 		<h1>Enter Score Data</h1>
 	</header>
 	<form class="jsScoreEntry">
-		<div><p>Select Expansions</p></div>
+		<div><h2>Select Expansions</h2></div>
 		<label for="baseCheck">Base</label>
 		<input class="jsBaseCheck" type="checkbox" id="baseCheck" checked>
 		<label for="darkcityCheck">Dark City</label>
 		<input class="jsDarkCityCheck" type="checkbox" id="darkcityCheck" checked>
-		<label for="winSelect">Did You Win?</label>
+		<div class="labelDiv">
+			<label for="winSelect">Did You Win?</label>
+		</div>
 		<select class="jsWinSelect" id="winSelect">
 			<option value="y">Yes</option>
 			<option value="n">No</option>
 		</select>
-		<label for="turnInput">Number Of Turns</label>
+		<div class="labelDiv">
+			<label for="turnInput">Number Of Turns</label>
+		</div>
 		<input class="jsTurnInput" type="number" id="turnInput" value="0">
-		<label for="escapedVilliansInput">Number Of Escaped Villains</label>
+		<div class="labelDiv">
+			<label for="escapedVilliansInput">Number Of Escaped Villains</label>
+		</div>
 		<input class="jsEscapedVillains" type="number" id="escapedVilliansInput" value="0">
-		<label for="schemesInput">Number Of Schemes</label>
+		<div class="labelDiv">
+			<label for="schemesInput">Number Of Schemes</label>
+		</div>
 		<input class="jsSchemesInput" type="number" id="schemesInput" value="0">
-		<label for="bystanderInput">Number Of Lost Bystanders</label>
+		<div class="labelDiv">
+			<label for="bystanderInput">Number Of Lost Bystanders</label>
+		</div>
 		<input class="jsBystanderInput" type="number" id="bystanderInput" value="0">
-		<label for="victoryPointInput">Total Victory Points</label>
+		<div class="labelDiv">
+			<label for="victoryPointInput">Total Victory Points</label>
+		</div>
 		<input class="jsVictoryPointInput" type="number" id="victoryPointInput" value="0">
-		<label for="mastermindSelect">Select Mastermind</label>
+		<div class="labelDiv">
+			<label for="mastermindSelect">Select Mastermind</label>
+		</div>
 		<select class="jsMastermindSelect" id="mastermindSelect"><option value="none">None</option></select>
-		<label for="schemeSelect">Select Scheme</label>
-		<select class="jsSchemeSelect" id="schemeSelect"><option value="none">None</option></select>
-		<label for="heroSelect1">Select Hero 1</label>
+		<div class="labelDiv">
+			<label for="schemeSelect">Select Scheme</label>
+		</div>
+		<select class="jsSchemeSelect smallSelect" id="schemeSelect"><option value="none">None</option></select>
+		<div class="labelDiv">
+			<label for="heroSelect1">Select Hero 1</label>
+		</div>
 		<select class="jsHeroSelect1" id="heroSelect1"><option value="none">None</option></select>
-		<label for="heroSelect2">Select Hero 2</label>
+		<div class="">
+			<img class="jsImage1 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+		</div>
+		<div class="labelDiv">
+			<label for="heroSelect2">Select Hero 2</label>
+		</div>
 		<select class="jsHeroSelect2" id="heroSelect2"><option value="none">None</option></select>
-		<label for="heroSelect3">Select Hero 3</label>
+		<div class="">
+			<img class="jsImage2 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+		</div>
+		<div class="labelDiv">
+			<label for="heroSelect3">Select Hero 3</label>
+		</div>
 		<select class="jsHeroSelect3" id="heroSelect3"><option value="none">None</option></select>
-		<label for="henchmenSelect">Select Henchmen Group</label>
+		<div class="">
+			<img class="jsImage3 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+		</div>
+		<div class="labelDiv">
+			<label for="henchmenSelect">Select Henchmen Group</label>
+		</div>
 		<select class="jsHenchmenSelect" id="henchmenSelect"><option value="none">None</option></select>
-		<label for="villainSelect">Select Villain Group</label>
+		<div class="labelDiv">
+			<label for="villainSelect">Select Villain Group</label>
+		</div>
 		<select class="jsVillainSelect" id="villainSelect"><option value="none">None</option></select>
-		<button type="submit">Submit</button>
+		<div class="submitDiv">
+			<button type="submit">Submit</button>
+		</div>
 	</form>
-	<div>
-		<img class="jsImage1" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
-	</div>
-	<div>
-		<img class="jsImage2" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
-	</div>
-	<div>
-		<img class="jsImage3" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
-	</div>
 	<div class="jsMessage"></div>
+</div>
 </body>
 </html>
