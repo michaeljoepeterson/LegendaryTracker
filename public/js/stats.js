@@ -10,10 +10,10 @@ function clearTableLoad(){
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>`;
@@ -31,10 +31,10 @@ function clearTables(){
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>`;
@@ -275,10 +275,10 @@ function createScoreString(score,index){
 				<td id="scheme">${score.scheme}</td>
 				<td id="villain">${score.villain}</td>
 				<td id="henchmen">${score.henchmen}</td>
-				<td id="numBystanders">${score.numBystanders}</td>
-				<td id="numSchemes">${score.numSchemes}</td>
-				<td id="numTurns" >${score.numTurns}</td>
-				<td id="numVillains">${score.numVillains}</td>
+				<td class="removeColumn" id="numBystanders">${score.numBystanders}</td>
+				<td class="removeColumn" id="numSchemes">${score.numSchemes}</td>
+				<td class="removeColumn" id="numTurns" >${score.numTurns}</td>
+				<td class="removeColumn" id="numVillains">${score.numVillains}</td>
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
 				<td class="noDisplay" id="scoreIdDb">${score.id}</td>

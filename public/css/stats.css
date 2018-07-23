@@ -75,6 +75,11 @@ body{
 	width: 178px;
 }
 
+.removeColumn{
+	display: none;
+}
+
+
 table, th, td{
 	border: 1px solid black;
     padding: 5px;
@@ -83,4 +88,11 @@ table, th, td{
 .rowClick:hover{
 	cursor: pointer;
 	background-color: rgb(0,9,85);
+}
+
+@media (min-width: 640px){
+
+	.removeColumn{
+		display: table-cell;
+	}
 }
