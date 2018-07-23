@@ -89,6 +89,9 @@ function getCharServer(){
 	let d = new Date();
 	let timeStamp = d.getTime();
 	timeStamp = timeStamp.toString();
+	if (heroChoice1 === "Wolverine Dark City"){
+		heroChoice1 = "Wolverine";
+	}
 	const settings = {
 		method: "GET",
 		headers:{ 

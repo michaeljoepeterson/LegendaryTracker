@@ -298,7 +298,7 @@ function getUserInfoSuccess(data){
 	$(".jsMatches").text(`Matches: ${data.matches}`);
 	$(".jsWins").text(`Wins: ${data.wins}`);
 	$(".jsLosses").text(`Losses: ${data.matches - data.wins}`);
-	$(".jsPercentage").text(`Win Percentage: ${(data.wins / data.matches * 100).toFixed(2)}%`);
+	$(".jsPercentage").text(`Win Percentage: ${(data.wins / data.matches * 100).toFixed(2)}`);
 
 	let totalScoreString;
 	let pptString;

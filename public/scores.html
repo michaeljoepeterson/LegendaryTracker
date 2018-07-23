@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/scores.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark navBack">
 		<a class="jsUserName navbar-brand" href="menu.html"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" href="#" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -36,21 +36,24 @@
 			</ul>
 		</div>
 	</nav>
-	<header role="banner">
-		<h1>High Scores</h1>
-	</header>
+	
 		<!--two layouts one for mobile and table for pc?
 		bootstrap table
 		edit/delete button
 		-->
 		<main role="main">
-		
+		<div class="box center">
+		<header role="banner">
+			<h1>High Scores</h1>
+		</header>
 		<form>
-			<label class="scoreLabel" for="scoreSelect">High Scores Organized by </label>
-			<select class="jsScoreSelect" id="scoreSelect">
-				<option value="total">Total Score</option>
-				<option value="ppt">Points Per Turn</option>
-			</select>
+			<div class="selectDiv">
+				<label class="scoreLabel" for="scoreSelect">High Scores Organized by </label>
+				<select class="jsScoreSelect" id="scoreSelect">
+					<option value="total">Total Score</option>
+					<option value="ppt">Points Per Turn</option>
+				</select>
+			</div>
 			<label class="scoreLabel" for="filterSelect">Filter by </label>
 			<select class="jsFilterSelect" id="filterSelect">
 				<option value="none">None</option>
@@ -59,12 +62,13 @@
 				<option value="hero">Hero</option>
 			</select>
 			<label class="scoreLabel jsNextFilterLabel" for="nextFilterSelect"></label>
-			<select class="jsNextFilterSelect" id="nextFilterSelect">
+			<select class="jsNextFilterSelect smallSelect" id="nextFilterSelect">
 				<option value="none">None</option>
 			</select>
 		</form>
-		<div class="table-responsive scoreTableTotal">
-			<table class="table scoreTable jsTableTotalScore">
+		</div>
+		<div class="table-responsive scoreTableTotal backgroundTable">
+			<table class="jsTableTotalScore">
 				<tr>
 					<th>Score</th>
 					<th>Heroes</th>
@@ -72,17 +76,17 @@
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive scoreTableppt">
-			<table class="table scoreTable jsTablePpt">
+		<div class="table-responsive scoreTableppt backgroundTable">
+			<table class="jsTablePpt">
 				<tr>
 					<th>Score</th>
 					<th>Heroes</th>
@@ -90,17 +94,17 @@
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive filterTable">
-			<table class="table jsFilterTable">
+		<div class="table-responsive filterTable backgroundTable">
+			<table class="jsFilterTable">
 				<tr>
 					<th>Score</th>
 					<th>Heroes</th>
@@ -108,17 +112,17 @@
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive filterTableppt">
-			<table class="table scoreTable jsFilterTableppt">
+		<div class="table-responsive filterTableppt backgroundTable">
+			<table class="jsFilterTableppt">
 				<tr>
 					<th>Score</th>
 					<th>Heroes</th>
@@ -126,10 +130,10 @@
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>

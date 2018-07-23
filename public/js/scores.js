@@ -9,10 +9,10 @@ function clearTables(){
 					<th>Scheme</th>
 					<th>Villain Group</th>
 					<th>Henchmen Goup</th>
-					<th>Bystanders Lost</th>
-					<th>Number of Schemes</th>
-					<th>Number of Turns</th>
-					<th>Number of Escaped Villains</th>						
+					<th class="removeColumn">Bystanders Lost</th>
+					<th class="removeColumn">Number of Schemes</th>
+					<th class="removeColumn">Number of Turns</th>
+					<th class="removeColumn">Number of Escaped Villains</th>						
 					<th>Points Per Turn</th>
 					<th>Total Score</th>
 				</tr>`
@@ -189,10 +189,10 @@ function createScoreString(score,index){
 				<td>${score.scheme}</td>
 				<td>${score.villain}</td>
 				<td>${score.henchmen}</td>
-				<td>${score.numBystanders}</td>
-				<td>${score.numSchemes}</td>
-				<td>${score.numTurns}</td>
-				<td>${score.numVillains}</td>
+				<td class="removeColumn">${score.numBystanders}</td>
+				<td class="removeColumn">${score.numSchemes}</td>
+				<td class="removeColumn">${score.numTurns}</td>
+				<td class="removeColumn">${score.numVillains}</td>
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
 			</tr>`

@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/stats.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar fixed-top  navbar-expand-lg navbar-dark navBack">
 		<a class="jsUserName navbar-brand" href="menu.html"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" href="#" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -36,6 +36,8 @@
 			</ul>
 		</div>
 	</nav>
+	<main role="main">
+	<div class="box center">
 	<header role="banner">
 		<h1>Stats</h1>
 	</header>
@@ -45,11 +47,13 @@
 	<h2 class="jsPercentage">Win Percentage:</h2>
 	<br>
 	<form>
+		<div class="selectDiv">
 		<label class="scoreLabel" for="scoreSelect">Score History Organized by </label>
 			<select class="jsScoreSelect" id="scoreSelect">
 				<option value="total">Total Score</option>
 				<option value="ppt">Points Per Turn</option>
 			</select>
+		</div>
 		<label class="scoreLabel" for="filterSelect">Filter by </label>
 			<select class="jsFilterSelect" id="filterSelect">
 				<option value="none">None</option>
@@ -58,13 +62,13 @@
 				<option value="hero">Hero</option>
 			</select>
 			<label class="scoreLabel jsNextFilterLabel" for="nextFilterSelect"></label>
-			<select class="jsNextFilterSelect" id="nextFilterSelect">
+			<select class="jsNextFilterSelect smallSelect" id="nextFilterSelect">
 				<option value="none">None</option>
 			</select>
 		</form>
-	<main role="main">
-		<div class="table-responsive scoreTableTotal">
-			<table class="table scoreTable jsTableTotalScore">
+	</div>
+		<div class="table-responsive scoreTableTotal backgroundTable">
+			<table class="scoreTable jsTableTotalScore">
 				<tr>
 					<th>Score</th>
 					<th>Win</th>
@@ -82,8 +86,8 @@
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive scoreTableppt">
-			<table class="table scoreTable jsTablePpt">
+		<div class="table-responsive scoreTableppt backgroundTable">
+			<table class="scoreTable jsTablePpt">
 				<tr>
 					<th>Score</th>
 					<th>Win</th>
@@ -101,8 +105,8 @@
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive filterTable">
-			<table class="table jsFilterTable">
+		<div class="table-responsive filterTable backgroundTable">
+			<table class="scoreTable jsFilterTable">
 				<tr>
 					<th>Score</th>
 					<th>Win</th>
@@ -120,8 +124,8 @@
 				</tr>
 			</table>
 		</div>
-		<div class="table-responsive filterTableppt">
-			<table class="table scoreTable jsFilterTableppt">
+		<div class="table-responsive filterTableppt backgroundTable">
+			<table class="scoreTable jsFilterTableppt">
 				<tr>
 					<th>Score</th>
 					<th>Win</th>
@@ -140,11 +144,11 @@
 			</table>
 
 		</div>	
-<!-- Modal -->
+
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
-      <!-- Modal content-->
+
       <div class="modal-content">
         <div class="modal-header">
         	<h4 class="modal-title jsModalHeader">Modal Header</h4>
@@ -152,15 +156,6 @@
           
         </div>
         <div class="modal-body">
-        	<!--
-          <label for="winSelectModal">Win</label>
-          
-			<select class="jsWinSelect" id="winSelectModal">
-				<option value="y">Yes</option>
-				<option value="n">No</option>
-			</select>
-			<br>
-		-->
 			<label for="hero1SelectModal">Hero 1</label>
 			<select class="jsHeroSelect1" id="hero1SelectModal"><option value="none">None</option></select>
 			<br>
@@ -182,32 +177,16 @@
 			<label for="henchmenSelectModal">Henchmen Group</label>
 			<select class="jsHenchmenSelect" id="henchmanSelectModal"><option value="none">None</option></select>
 			<br>
-		<!--
-			<label for="bystanderInputModal">Lost Bystanders</label>
-			<input class="jsBystanderInput" type="number" id="bystanderInputModal" value="0">
-			<br>
-			<label for="schemesInputModal">Schemes</label>
-			<input class="jsSchemesInput" type="number" id="schemesInputModal" value="0">
-			<br>
-			<label for="turnInputModal">Turns</label>
-			<input class="jsTurnInput" type="number" id="turnInputModal" value="0">
-			<br>
-			<label for="escapedVilliansInputModal">Escaped Villains</label>
-			<input class="jsEscapedVillains" type="number" id="escapedVilliansInputModal" value="0">
-			<br>
-			<label for="victoryPointInputModal">Victory Points From Match</label>
-			<input class="jsVictoryPointInput" type="number" id="victoryPointInputModal" value="0">
-		-->
         </div>
         <div class="modal-footer">
-        	<button type="button" class="btn btn-default jsDeleteButton" data-dismiss="modal">Delete</button>
-        	<button type="button" class="btn btn-default jsUpdateButton" data-dismiss="modal">Update</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	<button type="button" class="btn btn-default fontButton jsDeleteButton" data-dismiss="modal">Delete</button>
+        	<button type="button" class="btn btn-default fontButton jsUpdateButton" data-dismiss="modal">Update</button>
+          <button type="button" class="btn btn-default fontButton" data-dismiss="modal">Close</button>
         </div>
       </div>
       
     </div>
   </div>	
-	</main>
+</main>
 </body>
 </html>
