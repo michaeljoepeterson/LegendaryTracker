@@ -14,6 +14,10 @@ function loginError(err){
 	if (err.statusText === "Unauthorized"){
 		alert("Username or password incorrect");
 	}
+	else{
+		alert("An error occured");
+
+	}
 }
 
 function loginUser(user){

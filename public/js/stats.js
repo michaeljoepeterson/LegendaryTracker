@@ -116,6 +116,9 @@ function getError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getSchemes(callback){
@@ -291,6 +294,9 @@ function getUserInfoError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getUserInfoSuccess(data){
@@ -426,6 +432,9 @@ function updateError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function deleteSuccess(data){
@@ -437,6 +446,9 @@ function deleteSuccess(data){
 function deleteError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
 	}
 }
 
@@ -514,7 +526,12 @@ function getAuthSuccess(data){
 
 function getAuthError(err){
 	console.log(err);
-	window.location.href = "/index.html";
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getAuth(){	

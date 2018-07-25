@@ -50,6 +50,7 @@ function createDataString(data){
 function getCharServerSuccess(data){
 	console.log(data);
 	if (data.error === "No results"){
+		$(".loader").css("display","none");
 		console.log("no data");
 		let imgUrl = "https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg";
 		if(choice === 1){
@@ -61,8 +62,12 @@ function getCharServerSuccess(data){
 		else if(choice === 3){
 			$(".jsImage3").attr("src",imgUrl);
 		}
+		else if(choice === 4){
+			$(".jsImage4").attr("src",imgUrl);
+		}
 	}
 	else{
+		$(".loader").css("display","none");
 		let finalImgUrl = data.path + "/portrait_xlarge" + "." + data.extension;
 		console.log(finalImgUrl);
 		//imgUrl = finalImgUrl;
@@ -75,13 +80,20 @@ function getCharServerSuccess(data){
 		else if(choice === 3){
 			$(".jsImage3").attr("src",finalImgUrl);
 		}
+		else if(choice === 4){
+			$(".jsImage4").attr("src",finalImgUrl);
+		}
 	}
 }
 
 function getCharServerError(err){
 	console.log(err);
+	$(".loader").css("display","none");
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
 	}
 }
 
@@ -115,6 +127,7 @@ function checkDropdowns(){
 
 	//add get requests to api
 	$(".jsHeroSelect1").change(function(){
+		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
 		console.log(selectedVal);
 		heroChoice1 = selectedVal;
@@ -123,6 +136,7 @@ function checkDropdowns(){
 		
 	});
 	$(".jsHeroSelect2").change(function(){
+		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
 		console.log(selectedVal);
 		//console.log(MD5("1abcd1234"))
@@ -132,10 +146,20 @@ function checkDropdowns(){
 		
 	});
 	$(".jsHeroSelect3").change(function(){
+		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
 		console.log(selectedVal);
 		heroChoice1 = selectedVal;
 		choice = 3;
+		//getKey();
+		getCharServer();
+	});
+	$(".jsMastermindSelect").change(function(){
+		$(".loader").css("display","initial");
+		let selectedVal = $(this).find(':selected').val();
+		console.log(selectedVal);
+		heroChoice1 = selectedVal;
+		choice = 4;
 		//getKey();
 		getCharServer();
 	});
@@ -174,9 +198,12 @@ function populateHeroData(data){
 }
 
 function getError(err){
-
+	$(".loader").css("display","none");
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
 	}
 }
 
@@ -265,6 +292,7 @@ function populateVillainData(data){
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsVillainSelect").append(options);
+	$(".loader").css("display","none");
 }
 
 function getVillains(){
@@ -290,7 +318,12 @@ function getAuthSuccess(data){
 function getAuthError(err){
 	console.log(err);
 	//alert("Please login");
-	window.location.href = "/index.html";
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getAuth(){	
@@ -339,6 +372,9 @@ function addScoreError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function addScore(){
@@ -386,6 +422,7 @@ function checkBoxListener(){
 		
 		if($(".jsBaseCheck").is(":checked")){
 			console.log("base checked");
+			$(".loader").css("display","initial");
 			resetPage();
 			expansionObj["base"] = true;
 			getMasterminds();
@@ -395,6 +432,7 @@ function checkBoxListener(){
 			getVillains();
 		}
 		else{
+			$(".loader").css("display","initial");
 			console.log("base unchecked");
 			resetPage();
 			expansionObj["base"] = false;
@@ -409,6 +447,7 @@ function checkBoxListener(){
 
 	$(".jsDarkCityCheck").change(function(){
 		if($(".jsDarkCityCheck").is(":checked")){
+			$(".loader").css("display","initial");
 			//console.log("dark city checked");
 			resetPage();
 			expansionObj["Dark City"] = true;
@@ -419,6 +458,7 @@ function checkBoxListener(){
 			getVillains();
 		}
 		else{
+			$(".loader").css("display","initial");
 			//console.log("dark city unchecked");
 			resetPage();
 			expansionObj["Dark City"] = false;

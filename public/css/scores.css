@@ -15,7 +15,7 @@ header{
 	margin-top: 10px;
 }
 
-body{
+html,body{
 	background: linear-gradient(rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.5)), url("https://cf.geekdo-images.com/imagepagezoom/img/LMQlndZ4FNQM02EMnoPCrKIRvxg=/fit-in/1200x900/filters:no_upscale()/pic1430769.jpg");
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -74,6 +74,11 @@ body{
 
 .smallSelect{
 	width: 178px;
+}
+
+.introText{
+	font-weight: bold;
+	font-size: 18px;
 }
 
 table, td, th{

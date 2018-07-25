@@ -60,6 +60,9 @@ function getError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getSchemes(){
@@ -204,6 +207,9 @@ function getHighScoresError(err){
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getHighScoresSuccess(data){
@@ -284,7 +290,12 @@ function getAuthSuccess(data){
 function getAuthError(err){
 	console.log(err);
 	//alert("Please login");
-	window.location.href = "/index.html";
+	if(err.responseText === "Unauthorized"){
+		window.location.href = "/index.html";
+	}
+	else{
+		alert("An error occured");
+	}
 }
 
 function getAuth(){	
