@@ -44,7 +44,7 @@ html,body{
 }
 
 .smallSelect{
-	width: 178px;
+	width: 164px;
 }
 
 .cardImage{
@@ -55,6 +55,10 @@ html,body{
 .introText{
 	font-weight: bold;
 	font-size: 18px;
+}
+
+.mastermindSelect{
+
 }
 
 @media (min-width: 640px){

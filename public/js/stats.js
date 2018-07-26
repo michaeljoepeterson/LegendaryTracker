@@ -271,20 +271,20 @@ function createScoreString(score,index){
 		winText = "No"
 	}
 	let returnString = `<tr class="rowClick">
-				<td id="scoreId">${scoreNum}</td>
-				<td id="winText">${winText}</td>
-				<td id="hero">${score.hero1},${score.hero2},${score.hero3}</td>
-				<td id="mastermind">${score.mastermind}</td>
-				<td id="scheme">${score.scheme}</td>
-				<td id="villain">${score.villain}</td>
-				<td id="henchmen">${score.henchmen}</td>
-				<td class="removeColumn" id="numBystanders">${score.numBystanders}</td>
-				<td class="removeColumn" id="numSchemes">${score.numSchemes}</td>
-				<td class="removeColumn" id="numTurns" >${score.numTurns}</td>
-				<td class="removeColumn" id="numVillains">${score.numVillains}</td>
+				<td class="scoreId">${scoreNum}</td>
+				<td class="winText">${winText}</td>
+				<td class="hero">${score.hero1},${score.hero2},${score.hero3}</td>
+				<td class="mastermind">${score.mastermind}</td>
+				<td class="scheme">${score.scheme}</td>
+				<td class="villain">${score.villain}</td>
+				<td class="henchmen">${score.henchmen}</td>
+				<td class="removeColumn numBystanders">${score.numBystanders}</td>
+				<td class="removeColumn numSchemes">${score.numSchemes}</td>
+				<td class="removeColumn numTurns">${score.numTurns}</td>
+				<td class="removeColumn numVillains">${score.numVillains}</td>
 				<td>${score.pointsPerTurn}</td>
 				<td>${score.totalScore}</td>
-				<td class="noDisplay" id="scoreIdDb">${score.id}</td>
+				<td class="noDisplay scoreIdDb">${score.id}</td>
 			</tr>`
 	return returnString;
 }
@@ -372,19 +372,19 @@ function tableClicked(){
 	$("table").on("click", ".rowClick", function(event){
 		emptyDropdown(2);
 		event.stopImmediatePropagation();
-		let scoreId = $(this).children("#scoreId").text();
-		let scoreIdDb = $(this).children("#scoreIdDb").text();
+		let scoreId = $(this).children(".scoreId").text();
+		let scoreIdDb = $(this).children(".scoreIdDb").text();
 		rowData.scoreId = scoreIdDb;
 		$(".jsModalHeader").text("Score ID " + scoreId);
-		let mastermind = $(this).children("#mastermind").text();
+		let mastermind = $(this).children(".mastermind").text();
 		rowData.mastermind = mastermind;
-		let scheme = $(this).children("#scheme").text();
+		let scheme = $(this).children(".scheme").text();
 		rowData.scheme = scheme;
-		let villain = $(this).children("#villain").text();
+		let villain = $(this).children(".villain").text();
 		rowData.villian = villain;
-		let henchmen = $(this).children("#henchmen").text();
+		let henchmen = $(this).children(".henchmen").text();
 		rowData.henchman = henchmen;
-		let heroesText = $(this).children("#hero").text();
+		let heroesText = $(this).children(".hero").text();
 		let heroes = heroesText.split(",");
 		rowData.heroes = heroes;
 		/*

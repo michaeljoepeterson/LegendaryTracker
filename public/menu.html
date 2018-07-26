@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/menu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	<link href="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" rel="shortcut icon" type="image/x-icon">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/loader.css">
 	<link rel="stylesheet" type="text/css" href="css/menu.css">
@@ -38,11 +39,12 @@
 			</ul>
 		</div>
 	</nav>
-	<main role="main">
+	
 	<div class="box center">
 	<header role="banner">
 		<h1>Enter Score Data</h1>
 	</header>
+	<main role="main">
 	<P class="introText">Enter in your data from your game here! Your data will be uploaded to a database of your games. Total score and points per turn will be calculated automatically and used to organize your scores.</P>
 	<form class="jsScoreEntry">
 		<div><h2>Filter By Expansions</h2></div>
@@ -80,7 +82,7 @@
 		<div class="labelDiv">
 			<label for="mastermindSelect">Select Mastermind</label>
 		</div>
-		<select class="jsMastermindSelect" id="mastermindSelect"><option value="none">None</option></select>
+		<select class="smallSelect jsMastermindSelect" id="mastermindSelect"><option value="none">None</option></select>
 		<div class="cardContainer">
 			<img class="jsImage4 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
 		</div>
@@ -88,26 +90,34 @@
 			<label for="schemeSelect">Select Scheme</label>
 		</div>
 		<select class="jsSchemeSelect smallSelect" id="schemeSelect"><option value="none">None</option></select>
-		<div class="labelDiv">
-			<label for="heroSelect1">Select Hero 1</label>
-		</div>
-		<select class="jsHeroSelect1" id="heroSelect1"><option value="none">None</option></select>
-		<div class="cardContainer">
-			<img class="jsImage1 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
-		</div>
-		<div class="labelDiv">
-			<label for="heroSelect2">Select Hero 2</label>
-		</div>
-		<select class="jsHeroSelect2" id="heroSelect2"><option value="none">None</option></select>
-		<div class="cardContainer">
-			<img class="jsImage2 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
-		</div>
-		<div class="labelDiv">
-			<label for="heroSelect3">Select Hero 3</label>
-		</div>
-		<select class="jsHeroSelect3" id="heroSelect3"><option value="none">None</option></select>
-		<div class="cardContainer">
-			<img class="jsImage3 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+		<div class="row">
+			<div class="col-xs-12 col-md-4">
+				<div class="labelDiv">
+					<label for="heroSelect1">Select Hero 1</label>
+				</div>
+				<select class="jsHeroSelect1" id="heroSelect1"><option value="none">None</option></select>
+				<div class="cardContainer">
+					<img class="jsImage1 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				<div class="labelDiv">
+					<label for="heroSelect2">Select Hero 2</label>
+				</div>
+				<select class="jsHeroSelect2" id="heroSelect2"><option value="none">None</option></select>
+				<div class="cardContainer">
+					<img class="jsImage2 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				<div class="labelDiv">
+					<label for="heroSelect3">Select Hero 3</label>
+				</div>
+				<select class="jsHeroSelect3" id="heroSelect3"><option value="none">None</option></select>
+				<div class="cardContainer">
+					<img class="jsImage3 cardImage" src="https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg" alt="card back">
+				</div>
+			</div>
 		</div>
 		<div class="labelDiv">
 			<label for="henchmenSelect">Select Henchmen Group</label>
