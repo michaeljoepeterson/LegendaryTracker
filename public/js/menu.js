@@ -97,6 +97,9 @@ function getCharServer(){
 	if (heroChoice1 === "Wolverine Dark City"){
 		heroChoice1 = "Wolverine";
 	}
+	if (heroChoice1 === "Ironman"){
+		heroChoice1 = "Iron man";
+	}
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -323,6 +326,7 @@ function addedScore(data){
 	$(".jsImage1").attr("src",imgUrl);
 	$(".jsImage2").attr("src",imgUrl);
 	$(".jsImage3").attr("src",imgUrl);
+	$(".jsImage4").attr("src",imgUrl);
 
 }
 
