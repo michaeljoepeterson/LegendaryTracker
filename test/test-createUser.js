@@ -36,9 +36,6 @@ describe("/api/users test", function(){
 				password
 			})
 			.then((resTest) => {
-				//console.log(resTest);		
-				//expect.fail(null,null, 'Request should fail')
-				
 				expect(resTest).to.have.status(422);
 				expect(resTest.body.reason).to.equal('ValidationError');
 				expect(resTest.body.message).to.equal('Missing Field');
@@ -51,14 +48,6 @@ describe("/api/users test", function(){
 				if(err instanceof chai.AssertionError){
 					throw err;
 				}
-				/*
-				const res = err.response;
-				console.log(res);
-				expect(res).to.have.status(422);
-				expect(res.body.reason).to.equal('ValidationError');
-				expect(res.body.message).to.equal('Missing field');
-				expect(res.body.location).to.equal('username');
-				*/
 			});
 		});
 		it("should create a new user",function(){
@@ -75,7 +64,6 @@ describe("/api/users test", function(){
 				return User.findOne({username});
 			})
 			.then(user => {
-				//console.log(user);
 				expect(user).to.not.be.null;
 				return user.validatePassword(password);
 			})

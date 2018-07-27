@@ -1,16 +1,11 @@
 
 function userLogin(data){
-	console.log("Give key");
-	//window.location.href = "/protected/menu.html";
 	const authKey = data.authToken;
 	sessionStorage.setItem("Bearer", authKey);
-	//getMenu(authKey);
 	window.location.href = "/menu.html";
 }
 
 function loginError(err){
-	console.log(err);
-	console.log("login error");
 	if (err.statusText === "Unauthorized"){
 		alert("Username or password incorrect");
 	}
@@ -21,7 +16,6 @@ function loginError(err){
 }
 
 function loginUser(user){
-	console.log("user logged in");
 	const settings = {
 		method: "POST",
 		url: "/api/auth/login",
@@ -35,8 +29,6 @@ function loginUser(user){
 }
 
 function userAdded(data){
-	console.log(data);
-	console.log("created");
 	alert("User Created!");
 	$(".jsVerifyPassword").empty();
 	$("#usernameInput").val("");
@@ -45,9 +37,6 @@ function userAdded(data){
 
 }
 function userError(err){
-	console.log(err);
-	console.log('error');
-	console.log(err.responseJSON.message);
 	const errorMsg = err.responseJSON.message;
 	if (errorMsg === "Illegal Character"){
 		const location = err.responseJSON.location;
@@ -85,7 +74,6 @@ function userError(err){
 	}
 }
 function addUser(user){
-	console.log("user added");
 	const settings = {
 		method: "POST",
 		url: "/api/users",
@@ -100,7 +88,6 @@ function addUser(user){
 
 function submitClicked(){
 	$(".jsSignupForm").submit(function(event){
-		//event.stopImmediatePropagation();
 		event.preventDefault();
 
 		const userName = $("#usernameInput").val();
@@ -147,7 +134,6 @@ function loginClicked(){
 
 function createSignUp(){
 	$(".jsSignUpLink").click(function(event){
-		//event.stopImmediatePropagation();
 		event.preventDefault();
 		$(".jsVerifyPassword").empty();
 		$(".jsHeader").text("Sign up");

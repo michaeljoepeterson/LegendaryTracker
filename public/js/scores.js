@@ -44,7 +44,6 @@ function createDataString(data){
 	let newString;
 	const newdata = organizeDropdown(data.data);
 	for (let i = 0;i < newdata.length;i++){
-		//console.log(data.data[i].name);
 		newString += `<option value="${newdata[i].name}">${newdata[i].name}</option>`;
 	}
 	return newString;
@@ -66,8 +65,6 @@ function getError(err){
 }
 
 function getSchemes(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -81,8 +78,6 @@ function getSchemes(){
 }
 
 function getMasterminds(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -96,8 +91,6 @@ function getMasterminds(){
 }
 
 function getHeroes(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -113,7 +106,6 @@ function getHeroes(){
 function checkDropdown(){
 	$(".jsScoreSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
-		//console.log(selectedVal);
 		let filterType = $(".jsFilterSelect").val(); 
 		if (selectedVal === "total" && (filterType === "none" || filterBy === "none")){
 			$(".scoreTableTotal").css("display","inherit");
@@ -134,7 +126,6 @@ function checkDropdown(){
 	});
 	$(".jsFilterSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
 		if(selectedVal === "none"){
 			filterChoice = "none"
 			emptyDropdown();
@@ -166,7 +157,6 @@ function checkDropdown(){
 	$(".jsNextFilterSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
 		filterBy = selectedVal;
-		console.log(selectedVal);
 		if (selectedVal === "none"){
 			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
@@ -213,7 +203,6 @@ function getHighScoresError(err){
 }
 
 function getHighScoresSuccess(data){
-	console.log(data);
 	let totalScoreString;
 	let pptString;
 	clearTables();
@@ -282,14 +271,11 @@ function getHighScores(){
 }
 
 function getAuthSuccess(data){
-	//console.log(data);
 	$(".jsUserName").text(sessionStorage.getItem("user") + " Logged In");
 	
 }
 
 function getAuthError(err){
-	console.log(err);
-	//alert("Please login");
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
@@ -299,8 +285,6 @@ function getAuthError(err){
 }
 
 function getAuth(){	
-	//console.log("Attempt to get page");
-	
 	const settings = {
 		method: "GET",
 		headers:{ 

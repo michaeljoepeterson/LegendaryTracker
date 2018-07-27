@@ -26,14 +26,10 @@ app.use('/protected', jwtAuth);
 app.use("/protected",express.static('protected'));
 
 app.get('/', (req, res) => {
-  //console.log(res.render("menu"));
   res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/protected', jwtAuth, (req, res) => {
-  //req.isAuthenticated() === true
-  //res.json
-  //res.sendFile(__dirname + '/protected/menu.html');
   res.json({
     login: "success"
   });

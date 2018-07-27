@@ -37,7 +37,6 @@ function saveData(){
 		else{
 			data.save();
 		}
-		//console.log(i);
 	}
   console.log("done");
 }
@@ -64,7 +63,6 @@ function runServer(databaseUrl, port=PORT){
 function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
-      console.log('Closing server');
       server.close(err => {
         if (err) {
           return reject(err);
@@ -74,8 +72,6 @@ function closeServer() {
     });
   });
 }
-
-console.log("test");
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));

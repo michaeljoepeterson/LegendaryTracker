@@ -5,7 +5,6 @@ let expansionObj = {
 };
 
 let heroChoice1;
-//let imgUrl;
 let choice;
 function resetPage(){
 	const noneString = `<option value="none">None</option>`
@@ -41,17 +40,14 @@ function createDataString(data){
 	let newString;
 	const newdata = organizeDropdown(data.data);
 	for (let i = 0;i < newdata.length;i++){
-		//console.log(data.data[i].name);
 		newString += `<option value="${newdata[i].name}">${newdata[i].name}</option>`;
 	}
 	return newString;
 }
 
 function getCharServerSuccess(data){
-	console.log(data);
 	if (data.error === "No results"){
 		$(".loader").css("display","none");
-		console.log("no data");
 		let imgUrl = "https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg";
 		if(choice === 1){
 			$(".jsImage1").attr("src",imgUrl);
@@ -69,8 +65,6 @@ function getCharServerSuccess(data){
 	else{
 		$(".loader").css("display","none");
 		let finalImgUrl = data.path + "/portrait_xlarge" + "." + data.extension;
-		console.log(finalImgUrl);
-		//imgUrl = finalImgUrl;
 		if(choice === 1){
 			$(".jsImage1").attr("src",finalImgUrl);
 		}
@@ -87,7 +81,6 @@ function getCharServerSuccess(data){
 }
 
 function getCharServerError(err){
-	console.log(err);
 	$(".loader").css("display","none");
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
@@ -125,11 +118,9 @@ function getCharServer(){
 
 function checkDropdowns(){
 
-	//add get requests to api
 	$(".jsHeroSelect1").change(function(){
 		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
 		heroChoice1 = selectedVal;
 		choice = 1;
 		getCharServer();
@@ -138,8 +129,6 @@ function checkDropdowns(){
 	$(".jsHeroSelect2").change(function(){
 		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
-		//console.log(MD5("1abcd1234"))
 		heroChoice1 = selectedVal;
 		choice = 2;
 		getCharServer();
@@ -148,19 +137,15 @@ function checkDropdowns(){
 	$(".jsHeroSelect3").change(function(){
 		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
 		heroChoice1 = selectedVal;
 		choice = 3;
-		//getKey();
 		getCharServer();
 	});
 	$(".jsMastermindSelect").change(function(){
 		$(".loader").css("display","initial");
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
 		heroChoice1 = selectedVal;
 		choice = 4;
-		//getKey();
 		getCharServer();
 	});
 }
@@ -174,17 +159,11 @@ function filterData(data){
 			filterBy.push(key);
 		}
 	}
-	//console.log(filterBy);
-	//console.log(filterBy);
 	for(let i=copyData.data.length -1; i >=0 ; i--){
-		//console.log(copyData.data[i].expansion);
-		//console.log("test spice");
 		if(filterBy.includes(copyData.data[i].expansion)){
-			//console.log(copyData.data[i]);
 			copyData.data.splice(i,1);	
 		}
 	}
-	//console.log(copyData);
 	return copyData;
 }
 
@@ -222,15 +201,12 @@ function getHeroes(){
 }
 
 function populateMastermindData(data){
-	//console.log(data.data[0]);
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsMastermindSelect").append(options);
 }
 
 function getMasterminds(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -244,15 +220,12 @@ function getMasterminds(){
 }
 
 function populateSchemeData(data){
-	//console.log(data.data[0]);
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsSchemeSelect").append(options);
 }
 
 function getSchemes(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -266,15 +239,12 @@ function getSchemes(){
 }
 
 function populateHenchmenData(data){
-	//console.log(data.data[0]);
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsHenchmenSelect").append(options);
 }
 
 function getHenchmen(){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -288,7 +258,6 @@ function getHenchmen(){
 }
 
 function populateVillainData(data){
-	//console.log(data.data[0]);
 	let newData = filterData(data);
 	options = createDataString(newData);
 	$(".jsVillainSelect").append(options);
@@ -296,7 +265,6 @@ function populateVillainData(data){
 }
 
 function getVillains(){
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -310,14 +278,10 @@ function getVillains(){
 }
 
 function getAuthSuccess(data){
-	//console.log(data);
 	$(".jsUserName").text(sessionStorage.getItem("user") + " Logged In");
-	console.log(sessionStorage.getItem("user"));
 }
 
 function getAuthError(err){
-	console.log(err);
-	//alert("Please login");
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
@@ -327,8 +291,6 @@ function getAuthError(err){
 }
 
 function getAuth(){	
-	//console.log("Attempt to get menu");
-	
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -345,7 +307,6 @@ function getAuth(){
 function addedScore(data){
 	alert("Score Added!");
 	let imgUrl = "https://www.tradingcarddb.com/Images/Cards/Non-Sport/138214/138214-9150087Bk.jpg";
-	//$(".jsMessage").text("Score Added!");
 	$(".jsWinSelect").val("y");
 	$(".jsTurnInput").val("0");
 	$(".jsEscapedVillains").val("0");	
@@ -366,9 +327,7 @@ function addedScore(data){
 }
 
 function addScoreError(err){
-	//console.log(err);
 	$(".jsMessage").text("An error occured");
-	//on unauthorized need to go back to sign in screen
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}
@@ -418,10 +377,7 @@ function addScore(){
 function checkBoxListener(){
 
 	$(".jsBaseCheck").change(function(){
-		//getHeroes();
-		
 		if($(".jsBaseCheck").is(":checked")){
-			console.log("base checked");
 			$(".loader").css("display","initial");
 			resetPage();
 			expansionObj["base"] = true;
@@ -433,7 +389,6 @@ function checkBoxListener(){
 		}
 		else{
 			$(".loader").css("display","initial");
-			console.log("base unchecked");
 			resetPage();
 			expansionObj["base"] = false;
 			getMasterminds();
@@ -448,7 +403,6 @@ function checkBoxListener(){
 	$(".jsDarkCityCheck").change(function(){
 		if($(".jsDarkCityCheck").is(":checked")){
 			$(".loader").css("display","initial");
-			//console.log("dark city checked");
 			resetPage();
 			expansionObj["Dark City"] = true;
 			getMasterminds();
@@ -459,7 +413,6 @@ function checkBoxListener(){
 		}
 		else{
 			$(".loader").css("display","initial");
-			//console.log("dark city unchecked");
 			resetPage();
 			expansionObj["Dark City"] = false;
 			getMasterminds();

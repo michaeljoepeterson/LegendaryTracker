@@ -79,14 +79,12 @@ function createDataString(data){
 	let newString;
 	const newdata = organizeDropdown(data.data);
 	for (let i = 0;i < newdata.length;i++){
-		//console.log(data.data[i].name);
 		newString += `<option value="${newdata[i].name}">${newdata[i].name}</option>`;
 	}
 	return newString;
 }
 
 function populateData(data){
-	console.log(data);
 	options = createDataString(data);
 	$(".jsNextFilterSelect").append(options);
 }
@@ -104,7 +102,6 @@ function populateModal(data){
 	}else{
 		let idString = "#" + data.data[0].classification + "SelectModal";
 		options = createDataString(data);
-		//console.log(idString);
 		$(idString).append(options);
 		$(idString).val(rowData[data.data[0].classification]);
 	}
@@ -122,8 +119,6 @@ function getError(err){
 }
 
 function getSchemes(callback){
-	//html href
-	//console.log("get")
 	const settings = {
 		method: "GET",
 		headers:{ 
@@ -191,7 +186,6 @@ function getVillains(callback){
 function checkDropdown(){
 	$(".jsScoreSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
-		//console.log(selectedVal);
 		let filterType = $(".jsFilterSelect").val(); 
 		if (selectedVal === "total" && (filterType === "none" || filterBy === "none")){
 			$(".scoreTableTotal").css("display","inherit");
@@ -212,7 +206,6 @@ function checkDropdown(){
 	});
 	$(".jsFilterSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
-		console.log(selectedVal);
 		if(selectedVal === "none"){
 			filterChoice = "none"
 			emptyDropdown(1);
@@ -244,7 +237,6 @@ function checkDropdown(){
 	$(".jsNextFilterSelect").change(function(){
 		let selectedVal = $(this).find(':selected').val();
 		filterBy = selectedVal;
-		console.log(selectedVal);
 		if (selectedVal === "none"){
 			$(".scoreTableTotal").css("display","inherit");
 			$(".scoreTableppt").css("display","none");
@@ -300,7 +292,6 @@ function getUserInfoError(err){
 }
 
 function getUserInfoSuccess(data){
-	console.log(data);
 	$(".jsMatches").text(`Matches: ${data.matches}`);
 	$(".jsWins").text(`Wins: ${data.wins}`);
 	$(".jsLosses").text(`Losses: ${data.matches - data.wins}`);
@@ -387,21 +378,8 @@ function tableClicked(){
 		let heroesText = $(this).children(".hero").text();
 		let heroes = heroesText.split(",");
 		rowData.heroes = heroes;
-		/*
-		let numBystanders = $(this).children("#numBystanders").text();
-		rowData.numBystanders = numBystanders;
-		let numSchemes = $(this).children("#numSchemes").text();
-		rowData.numSchemes = numSchemes;
-		let numTurns = $(this).children("#numTurns").text();
-		rowData.numTurns = numTurns;
-		let numVillains = $(this).children("#numVillains").text();
-		rowData.numVillains = numVillains;
-		let victoryPoints = $(this).children("#victoryPoints").text();
-		rowData.victoryPoints = victoryPoints;
-		*/
 		generateModal();
 		$('#myModal').modal('show');
-		console.log(rowData);
 		
 	});
 }
@@ -423,7 +401,6 @@ function getUserInfo(){
 	$.ajax(settings);
 }
 function updateSuccess(data){
-	console.log(data);
 	alert("Score updated!");
 	location.reload();
 }
@@ -438,7 +415,6 @@ function updateError(err){
 }
 
 function deleteSuccess(data){
-	console.log(data);
 	alert("Score deleted!");
 	location.reload();
 }
@@ -453,7 +429,6 @@ function deleteError(err){
 }
 
 function deleteRequest(){
-	console.log(sessionStorage.getItem("user"));
 	let userData = {
 		username: sessionStorage.getItem("user"),
 		scoreId: rowData.scoreId
@@ -507,14 +482,12 @@ function updateRequest(){
 
 function deleteButtonClicked(){
 	$(".jsDeleteButton").click(function(event){
-		//event.stopImmediatePropagation();
 		deleteRequest();
 	});
 }
 
 function updateButtonClicked(){
 	$(".jsUpdateButton").click(function(event){
-		//event.stopImmediatePropagation();
 		updateRequest();
 	});
 }
@@ -525,7 +498,6 @@ function getAuthSuccess(data){
 }
 
 function getAuthError(err){
-	console.log(err);
 	if(err.responseText === "Unauthorized"){
 		window.location.href = "/index.html";
 	}

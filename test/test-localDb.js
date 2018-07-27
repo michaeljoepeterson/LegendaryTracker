@@ -46,7 +46,6 @@ describe("Add all test data and check that it was added correctly", function(){
   	});
 
 	it("should create a new database and add data from LData.js correctly",function(done){
-		//runServer(TEST_DATABASE_URL);
 		this.timeout(6000);
    		setTimeout(done, 6000);
 		
