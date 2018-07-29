@@ -50,6 +50,7 @@ html,body{
 .cardImage{
 	width: 150px;
 	height: 225px;
+	margin: 8px;
 }
 
 .introText{
@@ -57,8 +58,12 @@ html,body{
 	font-size: 18px;
 }
 
-.mastermindSelect{
+.labelDiv{
+	margin: 6px;
+}
 
+select{
+	margin: 6px;
 }
 
 @media (min-width: 640px){
