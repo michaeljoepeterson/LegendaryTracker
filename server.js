@@ -11,6 +11,7 @@ mongoose.Promise = global.Promise;
 const {LegendaryData} = require('./models/legendaryData');
 const app = express();
 const {router: userRouter} = require('./users/router');
+const {router: getCharImageRouter} = require('./getCharImage/router');
 const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 app.use(morgan('common'));
@@ -22,6 +23,7 @@ passport.use(jwtStrategy);
 
 app.use("/api/users", userRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/characterimg', getCharImageRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 app.use('/protected', jwtAuth);

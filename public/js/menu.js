@@ -105,7 +105,7 @@ function getCharServer(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/characterimg",
+		url: "/api/characterimg",
 		data:{
 			"timeStamp":timeStamp,
 			character:heroChoice1
