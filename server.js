@@ -24,8 +24,8 @@ app.use("/api/users", userRouter);
 app.use('/api/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
-app.use('/protected', jwtAuth);
-app.use("/protected",express.static('protected'));
+//app.use('/protected', jwtAuth);
+//app.use("/protected",express.static('protected'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -130,7 +130,7 @@ function runServer(databaseUrl, port = PORT) {
           mongoose.disconnect();
           reject(err);
         });
-    });
+    }, { useNewUrlParser: true });
   });
 }
 
