@@ -261,7 +261,7 @@ function getHighScores(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/highScore",
+		url: "/api/scores/highScore",
 		data:user,
 		success: getHighScoresSuccess,
 		error: getHighScoresError,
