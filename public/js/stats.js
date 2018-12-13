@@ -392,7 +392,7 @@ function getUserInfo(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/stats",
+		url: "/api/scores/stats",
 		data:user,
 		success: getUserInfoSuccess,
 		error: getUserInfoError,
@@ -438,7 +438,7 @@ function deleteRequest(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/deletescore",
+		url: "/api/scores/deletescore",
 		data: JSON.stringify(userData),
 		success: deleteSuccess,
 		error: deleteError,
@@ -469,7 +469,7 @@ function updateRequest(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/updatescore",
+		url: "/api/scores/updatescore",
 		data: JSON.stringify(scoreData),
 		success: updateSuccess,
 		error: updateError,

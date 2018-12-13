@@ -14,6 +14,7 @@ const {router: userRouter} = require('./users/router');
 const {router: getCharImageRouter} = require('./getCharImage/router');
 const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
+const {router: scoresRouter} = require('./scores/router');
 app.use(morgan('common'));
 app.use(express.json());
 app.use(express.static('public'));
@@ -24,6 +25,7 @@ passport.use(jwtStrategy);
 app.use("/api/users", userRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/characterimg', getCharImageRouter);
+app.use('/api/scores', scoresRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 app.use('/protected', jwtAuth);

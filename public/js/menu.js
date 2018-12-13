@@ -367,7 +367,7 @@ function addScore(){
 		headers:{ 
 			"Authorization": 'Bearer ' + sessionStorage.getItem("Bearer")
 		},
-		url: "/api/users/addscore",
+		url: "/api/scores/addscore",
 		data: JSON.stringify(scoreData),
 		success: addedScore,
 		error: addScoreError,
