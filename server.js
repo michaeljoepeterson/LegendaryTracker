@@ -15,7 +15,7 @@ const {router: getCharImageRouter} = require('./getCharImage/router');
 const {localStrategy, jwtStrategy} = require('./auth/strategies');
 const {router: authRouter} = require('./auth/router');
 const {router: scoresRouter} = require('./scores/router');
-app.use(morgan('common'));
+//app.use(morgan('common'));
 app.use(express.json());
 app.use(express.static('public'));
 app.set("view engine", 'ejs');

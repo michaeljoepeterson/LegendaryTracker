@@ -24,6 +24,8 @@ router.get("/",(req,res) =>{
 	
 	let timeStamp =  req.query.timeStamp;
 	let m5Hash = MD5(timeStamp + privateKey+publicKey);
+	console.log(timeStamp)
+	console.log(m5Hash);
 	let character = req.query.character;
 	let endUrl = "http://gateway.marvel.com/v1/public/characters?ts=" + timeStamp + "&apikey=" + publicKey + "&hash=" + m5Hash + "&name=" + character; 
 
@@ -41,19 +43,29 @@ router.get("/",(req,res) =>{
 		});
 	}
 	request(endUrl,function(err,response,body){
-        let parsed = JSON.parse(body);
-        if(parsed.data.results.length === 0){
-        	return res.json({
-				error:"No results"
+		console.log("got a result");
+		try{
+			let parsed = JSON.parse(body);
+
+	        if(parsed.data.results.length === 0){
+	        	return res.json({
+					error:"No results"
+				});
+	        }
+	        else{
+	        	return res.json({
+					path:parsed.data.results[0].thumbnail.path,
+					extension:parsed.data.results[0].thumbnail.extension
+				});
+	        }
+		}
+		catch(err){
+			console.log("error getting image: ",err);
+			return res.json({
+				code:400,
+				Message:"Error getting image"
 			});
-        }
-        else{
-        	return res.json({
-				path:parsed.data.results[0].thumbnail.path,
-				extension:parsed.data.results[0].thumbnail.extension
-			});
-        }
-        
+		}      
 	});
 
 });
